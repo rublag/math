@@ -1,0 +1,423 @@
+\RequirePackage[l2tabu,orthodox]{nag}
+%
+\documentclass[a4paper]{report}
+%
+\usepackage[utf8]{inputenc}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[russian]{babel}
+%
+\usepackage[intlimits]{amsmath}  % Basic math structures
+\usepackage{amssymb}  % Extended symbols
+\usepackage{amsthm}  % Theorem environment
+%
+\usepackage[a4paper,margin=0.5cm,includefoot,heightrounded]{geometry}
+\usepackage[colorlinks,unicode]{hyperref}
+\usepackage{layout}
+\usepackage{dsfont}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{tikz}
+\usepackage{titlesec}
+\usepackage{pgf}
+\usepackage{pgfplots}
+%
+\usepackage{wrapfig}
+%
+\pgfplotsset{compat=1.16}
+%
+\pagestyle{plain}
+%
+\titleformat{\chapter}[block]{\normalfont\huge\bfseries\centering}{\S \thechapter.}{20pt}{\Huge}
+\include{helper}
+%
+\begin{document}
+%
+\tableofcontents
+%
+\input{chap1/main.tex}
+%
+\chapter{Вычисление обратного преобразования Лапласа с помощью формулы Меллина и основной теоремы о вычетах}
+
+Мы выразили $g_{m,n}(t)$ как:
+\begin{equation}\label{eq:gmn}
+    g_{m,n}(t) = 
+    \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t)
+\end{equation}
+
+Теперь нужно вычислить обратное преобразование Лапласа. Для этого мы будем использовать формулу Меллина:
+\[
+    L^{-1}_s \left[ F \left( s \right)  \right](t) = 
+    \frac{1}{2\pi i} \int_{\alpha - i \infty}^{\alpha + i \infty} e^{ts} F(s) ds
+\]
+
+Итак, нам нужно вычислить:
+\[
+    L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t)
+\]
+
+Подставим вместо $\psi$ формулу нашего вейвлета:
+\[
+    L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t) =
+%
+    L^{-1}_u \left[ \frac{1}{u^k} \frac{2}{\sqrt{3} \pi^{1/4} } 
+    \left( 1 - \left( \frac{1}{2^{m+1} u} - n \right)^2 \right) 
+    \exp \left( -\frac{1}{2} \left( \frac{1}{2^{m+1}u} - n \right)^2  \right)
+    \right](t)
+\]
+
+Распишем множитель перед экспонентой:
+\[
+    1 - \left( \frac{1}{2^{m+1} u } - n \right)^2 =
+    1 - \left( \frac{1}{2^{2(m+1)} u^2} - 2 \frac{1}{2^{m+1} u } n + n^2 \right) =
+    \left( 1 - n^2 \right) + \frac{1}{u} \left(\frac{n}{2^m}\right) - \frac{1}{u^2} \left(\frac{1}{4^{m+1}}\right)
+\]
+
+Введем обозначение:
+\[
+    r_{m,n}(u) = \frac{2}{\sqrt{3} \pi^{1/4}} \exp \left( -\frac{1}{2} \left( \frac{1}{2^{m+1}u} - n \right)  \right) 
+\]
+
+Таким образом,
+\begin{multline}\label{eq:invlap_gen}
+    L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t) =
+    \left( 1 - n^2 \right)  L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) +
+    \left( \frac{n}{2^m} \right)  L^{-1}_u \left[ \frac{1}{u^{k+1}} r_{m,n}(u) \right](t)
+-\\-
+    \left( \frac{1}{4^{m+1}} \right)  L^{-1}_u \left[ \frac{1}{u^{k+2}} r_{m,n}(u) \right](t)
+\end{multline}
+
+Отсюда видно, что достаточно найти $L^{-1}_u [\frac{1}{u^k} r_{m,n}(u)](t)$ для каждого $k$.
+
+\section{Находим $L^{-1}_u [\frac{1}{u^k} r_{m,n}(u)](t)$}
+Выше мы ввели
+\[
+    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t)
+\]
+Подставим обратно $r_{m,n}(u)$:
+\[
+    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) =
+%
+    L^{-1}_u \left[ \frac{1}{u^k} \frac{2}{\sqrt{3} \pi^{1/4} } 
+    \exp \left( -\frac{1}{2} \left( \frac{1}{2^{m+1}u} - n \right)^2  \right)
+    \right](t)
+\]
+Раскроем квадрат под экспонентой:
+\[
+    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) =
+%
+    L^{-1}_u \left[ \frac{1}{u^k} \frac{2}{\sqrt{3} \pi^{1/4} } 
+    \exp \left( -\frac{1}{2}
+    \left(\left( n^2 \right) - \frac{1}{u} \left(\frac{n}{2^m}\right) + \frac{1}{u^2} \left(\frac{1}{4^{m+1}}\right)\right)
+    \right)
+    \right](t)
+\]
+Сгруппируем $2^{m+1}u$:
+\[
+    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) =
+%
+    L^{-1}_u \left[ \frac{2^{k(m+1)}}{\left(2^{m+1}u\right)^k} \frac{2}{\sqrt{3} \pi^{1/4} } 
+    \exp \left( -\frac{n^2}{2} + \frac{n}{2^{m+1}u} - \frac{1}{2 \left( 2^{m+1}u \right)^2 }
+    \right)
+    \right](t)
+\]
+Вынесем множители, не зависящие от $u$, за $L^{-1}_u$:
+\[
+    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) =
+%
+    e^{-\frac{n^2}{2}} 2^{k(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    L^{-1}_u \left[ \frac{1}{\left(2^{m+1}u\right)^k}
+    \exp \left(\frac{n}{2^{m+1}u} - \frac{1}{2 \left( 2^{m+1}u \right)^2 }
+    \right)
+    \right](t)
+\]
+Используя теорему о замене переменной в обратном преобразовании Лапласа, делаем замену $s=2^{m+1}u$:
+\[
+    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) =
+%
+    e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    L^{-1}_s \left[ \frac{1}{s^k}
+    \exp \left(\frac{n}{s} - \frac{1}{2 s^2 }
+    \right)
+    \right] \left( \frac{t}{2^{m+1}} \right)
+\]
+\section{Находим обратное преобразование Лапласа}
+В предыдущем разделе мы выразили:
+\begin{equation}\label{eq:invlap}
+    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) =
+%
+    e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    L^{-1}_s \left[ \frac{1}{s^k}
+    \exp \left(\frac{n}{s} - \frac{1}{2 s^2 }
+    \right)
+    \right] \left( \frac{t}{2^{m+1}} \right)
+\end{equation}
+Чтобы вычислить правую часть, найдем теперь
+\begin{equation}\label{eq:invlap_as_int}
+    L^{-1}_s \left[ \frac{1}{s^k}
+    \exp \left(\frac{n}{s}\right)
+    \exp \left(-\frac{1}{2 s^2 }\right)
+    \right] \left( \tau \right)
+\end{equation}
+Воспользуемся формулой Меллина обратного преобразования Лапласа. У наc особенность только в нуле, поэтому можно взять любую $\alpha>0$:
+\[
+    L^{-1}_s \left[ \frac{1}{s^k}
+    \exp \left(\frac{n}{s}\right)
+    \exp \left(-\frac{1}{2 s^2 }\right)
+    \right] \left( \tau \right) =
+%
+    \frac{1}{2\pi i}\int_{\alpha-i\infty}^{\alpha+i\infty} e^{s\tau} \frac{1}{s^k} e^{-1/(2s^2)} e^{n/s} ds
+\]
+
+\input{jordan-lemma-path-figure.tex}
+
+Берем контур $C$ = $C_1 + C_2$, где $C_1$ --- искомый, а $C_2$ --- дуга окружности (слева от $C_1$ с центром в $(\alpha, 0)$).
+
+Оценим $F(s) := (1/s^k) e^{-1/(2s^2)} e^{n/s}$ на $C_r$, где $r > 4\alpha$. Для этого оценим каждый из множителей. Сначала $1/s$:
+\[
+    \left|\frac{1}{s}\right| = 
+    \left|\frac{1}{\alpha+re^{i\phi}}\right| =
+    \frac{1}{\sqrt{\left(\alpha+r\cos\phi\right)^2 + \left(r\sin\phi\right)^2}} =
+    \frac{1}{r\sqrt{\left(\frac{\alpha}{r} + \cos\phi\right)^2 + \sin^2\phi}} \le
+    \frac{1}{r\sqrt{1 + \frac{2\alpha\cos\phi}{r}}} \le
+    \frac{1}{r\sqrt{1 + \frac{\cos\phi}{2}}} \le
+    \frac{\sqrt{2}}{r} 
+\]
+Теперь оценим $e^{-1/(2s^2)}$ на том же контуре. Известно, что $|e^{z}| = e^{|z|}$
+\[
+    \left|\exp\left(-\frac{1}{2s^2}\right)\right| \le
+    \exp\left(\left|-\frac{1}{2s^2}\right|\right) =
+    \exp\left(\frac{1}{r^2}\right)
+\]
+Аналогично оцениваем $e^{n/s}$:
+\[
+    \left| \exp\left( \frac{n}{s} \right)  \right| \le 
+    \exp\left(\left| \frac{n}{s} \right|\right) =
+    \exp\left( \frac{|n|\sqrt{2} }{r} \right) 
+\]
+Объединяем оценки и получаем:
+\[
+    \left|\frac{1}{s^k} \exp\left(-\frac{1}{2s^2}\right) \exp\left(\frac{n}{s}\right)\right| \le
+    \left(\frac{\sqrt{2}}{r}\right)^k \exp\left(\frac{1}{r^2}\right) \exp\left(\frac{|n|\sqrt{2}}{r}\right)
+    \xrightarrow[r \to \infty]{} 0
+\]
+
+А значит, по лемме Жордана $\int\limits_{C_r} e^{s\tau} F(s)ds$ стремится к нулю.
+Поэтому можем использовать основную теорему о вычетах:
+\[
+    \frac{1}{2\pi i}\int_{\alpha-i\infty}^{\alpha+i\infty} e^{s\tau} \frac{1}{s^k} e^{-1/(2s^2)} e^{n/s} ds =
+    \frac{1}{2\pi i} 2\pi i \Res_0 \left( e^{s\tau} \frac{1}{s^k} e^{-1/(2s^2)} e^{n/s} ds \right)
+\]
+У нас возникает два случая: $n=0$ и $n\neq$0
+\subsection{Случай $n = 0$}
+Воспользуемся теоремой о правильной части функции $e^{s\tau} e^{-1/(2s^2)}$. Нам нужен $k-1$-й член ряда Лорана. Получаем:
+\[
+    \frac{1}{2\pi i}\int_{\alpha-i\infty}^{\alpha+i\infty} e^{s\tau} \frac{1}{s^k} e^{-1/(2s^2)} e^{n/s} ds =
+    \sum_{j=0}^{\infty} \frac{\tau^{2j+k-1} / (-2)^j}{(2j+k-1)!\,j!}
+\]
+Таким образом, мы выразили вычислили \ref{eq:invlap_as_int}:
+\[
+    L^{-1}_s \left[ \frac{1}{s^k}
+    \exp \left(\frac{n}{s}\right)
+    \exp \left(-\frac{1}{2 s^2 }\right)
+    \right] \left( \tau \right)
+=
+    \sum_{j=0}^{\infty} \frac{\tau^{2j+k-1} / (-2)^j}{(2j+k-1)!\,j!}
+\]
+Подставим это выражение в \ref{eq:invlap}, заменяя $\tau$ на $t/2^{m+1}$:
+\begin{multline*}
+    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) =
+%
+    e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    L^{-1}_s \left[ \frac{1}{s^k}
+    \exp \left(\frac{n}{s} - \frac{1}{2 s^2 }
+    \right)
+    \right] \left( \frac{t}{2^{m+1}} \right) =
+\\%
+    e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k-1} / (-2)^j}{(2j+k-1)!\,j!}
+\end{multline*}
+Наконец, подставим это в~\ref{eq:invlap_gen}:
+\begin{multline}
+    L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t) =
+    \left( 1 - n^2 \right)  L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) +
+    \left( \frac{n}{2^m} \right)  L^{-1}_u \left[ \frac{1}{u^{k+1}} r_{m,n}(u) \right](t) +
+\\+
+    \left( \frac{1}{4^{m+1}} \right)  L^{-1}_u \left[ \frac{1}{u^{k+2}} r_{m,n}(u) \right](t)
+=\\=
+    \left( 1-n^2 \right) 
+    e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k-1} / (-2)^j}{(2j+k-1)!\,j!}
++
+    \left( \frac{n}{2^m} \right) 
+    e^{-\frac{n^2}{2}} 2^{k(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k} / (-2)^j}{(2j+k)!\,j!}
+-\\-
+    \left( \frac{1}{4^{m+1}} \right) 
+    e^{-\frac{n^2}{2}} 2^{(k+1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k+1} / (-2)^j}{(2j+k+1)!\,j!}
+\end{multline}
+Теперь получим выражение для $g(t)$, подставляя только что полученную формулу в~\ref{eq:gmn}:
+\begin{multline*}
+    g_{m,n}(t) = 
+    \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t)
+=\\=
+    \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} \left( 1-n^2 \right) 
+    e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k-1} / (-2)^j}{(2j+k-1)!\,j!}
++\\+
+    \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} \left( \frac{n}{2^m} \right) 
+    e^{-\frac{n^2}{2}} 2^{k(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k} / (-2)^j}{(2j+k)!\,j!}
+-\\-
+    \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} \left( \frac{1}{4^{m+1}} \right) 
+    e^{-\frac{n^2}{2}} 2^{(k+1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k+1} / (-2)^j}{(2j+k+1)!\,j!}
+\end{multline*}
+%
+Начнем упрощать выражение. Для начала, вынесем из суммы, степень, не зависящую от переменной суммирования и сделаем замену $n=0$ (так как рассматриваем именно этот случай):
+\[
+    g_{m,0}(t) =
+%
+    \frac{\Gamma(k)}{\sqrt{2^m}}
+    \frac{2}{\sqrt{3} \pi^{1/4}} \left(
+%
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j} / (-2)^j}{(2j+k-1)!\,j!}
+-
+    \left( \frac{t^2}{4^{m+1}} \right) 
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j} / (-2)^j}{(2j+k+1)!\,j!}
+%
+    \right)
+\]
+\subsection{Случай $n \neq 0$}
+Воспользуемся теоремой о правильной части функции $e^{s\tau} e^{-1/(2s^2)} e^{n/s}$. Нам нужен $k-1$-й член ряда Лорана. Получаем:
+\[
+    \frac{1}{2\pi i}\int_{\alpha-i\infty}^{\alpha+i\infty} e^{s\tau} \frac{1}{s^k} e^{-1/{2s^2}} e^{n/s} ds =
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\tau^{2j+k-1+i} / (-2)^j}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
+\]
+Таким образом, мы выразили вычислили \ref{eq:invlap_as_int}:
+\[
+    L^{-1}_s \left[ \frac{1}{s^k}
+    \exp \left(\frac{n}{s}\right)
+    \exp \left(-\frac{1}{2 s^2 }\right)
+    \right] \left( \tau \right)
+=
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\tau^{2j+k-1+i} / (-2)^j}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
+\]
+Подставим это выражение в \ref{eq:invlap}, заменяя $\tau$ на $t/2^{m+1}$:
+\begin{multline*}
+    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) =
+%
+    e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    L^{-1}_s \left[ \frac{1}{s^k}
+    \exp \left(\frac{n}{s} - \frac{1}{2 s^2 }
+    \right)
+    \right] \left( \frac{t}{2^{m+1}} \right) =
+\\%
+    e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k-1+i} / (-2)^j}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
+\end{multline*}
+Наконец, подставим это в~\ref{eq:invlap_gen}:
+\begin{multline}
+    L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t) =
+    \left( 1 - n^2 \right)  L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) +
+    \left( \frac{n}{2^m} \right)  L^{-1}_u \left[ \frac{1}{u^{k+1}} r_{m,n}(u) \right](t)
++\\+
+    \left( \frac{1}{4^{m+1}} \right)  L^{-1}_u \left[ \frac{1}{u^{k+2}} r_{m,n}(u) \right](t)
+=\\=
+    \left( 1-n^2 \right) 
+    e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k-1+i} / (-2)^j}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
++\\+
+    \left( \frac{n}{2^m} \right) 
+    e^{-\frac{n^2}{2}} 2^{k(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k+i} / (-2)^j}{(2j+k+i)!\,j!} \frac{n^i}{i!}
+-\\-
+    \left( \frac{1}{4^{m+1}} \right) 
+    e^{-\frac{n^2}{2}} 2^{(k+1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k+1+i} / (-2)^j}{(2j+k+1+i)!\,j!} \frac{n^i}{i!}
+\end{multline}
+Теперь получим выражение для $g_{m,n}(t)$, подставляя только что полученную формулу в~\ref{eq:gmn}
+\begin{multline*}
+    g_{m,n}(t) = 
+    \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t)
+=\\=
+    \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} \left( 1-n^2 \right) 
+    e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k-1+i} / (-2)^j}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
++\\+
+    \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} \left( \frac{n}{2^m} \right) 
+    e^{-\frac{n^2}{2}} 2^{k(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k+i} / (-2)^j}{(2j+k+i)!\,j!} \frac{n^i}{i!}
+-\\-
+    \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} \left( \frac{1}{4^{m+1}} \right) 
+    e^{-\frac{n^2}{2}} 2^{(k+1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k+1+i} / (-2)^j}{(2j+k+1+i)!\,j!} \frac{n^i}{i!}
+\end{multline*}
+Упростим:
+\begin{multline*}
+    g_{m,n}(t)
+=
+    \frac{\Gamma(k)}{\sqrt{2^m}} e^{-\frac{n^2}{2}} \frac{2}{\sqrt{3} \pi^{1/4}} \left(
+    \left( 1-n^2 \right) 
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+i} / (-2)^j}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
++
+    \left( \frac{nt}{2^m} \right) 
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+i} / (-2)^j}{(2j+k+i)!\,j!} \frac{n^i}{i!}
+-\right.\\+\left.
+    \left( \frac{t^2}{4^{m+1}} \right) 
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+i} / (-2)^j}{(2j+k+1+i)!\,j!} \frac{n^i}{i!}
+    \right)
+\end{multline*}
+\section{Результат}
+Выпишем обе полученные формулы вместе:
+\[
+    g_{m,0}(t) =
+%
+    \frac{\Gamma(k)}{\sqrt{2^m}}
+    \frac{2}{\sqrt{3} \pi^{1/4}} \left(
+%
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j} / (-2)^j}{(2j+k-1)!\,j!}
+-
+    \left( \frac{t^2}{4^{m+1}} \right) 
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j} / (-2)^j}{(2j+k+1)!\,j!}
+%
+    \right)
+\]
+\begin{multline*}
+    g_{m,n}(t)
+=
+    \frac{\Gamma(k)}{\sqrt{2^m}} e^{-\frac{n^2}{2}} \frac{2}{\sqrt{3} \pi^{1/4}} \left(
+    \left( 1-n^2 \right) 
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+i} / (-2)^j}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
++
+    \left( \frac{nt}{2^m} \right) 
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+i} / (-2)^j}{(2j+k+i)!\,j!} \frac{n^i}{i!}
+-\right.\\+\left.
+    \left( \frac{t^2}{4^{m+1}} \right) 
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+i} / (-2)^j}{(2j+k+1+i)!\,j!} \frac{n^i}{i!}
+    \right)
+\end{multline*}
+%
+%
+\chapter{Эксперименты}
+%
+\begin{tabular}{ l l l l }
+\hline
+    Функция        & Способ вычисления                              & Машинная точность                     & Значение                  \\ 
+                   &                                                & (размер мантиссы),                    &                           \\
+\hline%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    $g_{0,0}(1)$   & численно, интеграл, контур $[1-100i, 1+100i]$  & 100 десятичных знаков                 & $ 0.864$                  \\
+                   & численно, ряд                                  & 256 двоичных знаков                   & $ 0.864$                  \\
+
+    $g_{0,0}(10)$  & численно, интеграл, контур $[1-100i, 1+100i]$  & 100 десятичных знаков                 & $ 0.591$                  \\
+                   & численно, ряд                                  & 256 двоичных знаков                   & $ 0.591$                  \\
+
+    $g_{0,0}(100)$ & численно, интеграл, контур $[1-10i, 1+10i]$    & 100 десятичных знаков                 & $-2 \times 10^{19}$       \\
+                   & численно, интеграл, контур $[1-100i, 1+100i]$  & 100 десятичных знаков                 & Вычисляется дольше 1 часа \\
+                   & численно, ряд                                  & 256 двоичных знаков                   & $-0.440$                  \\
+\hline
+\end{tabular}
+\input{theorems/main.tex}
+%
+\end{document}

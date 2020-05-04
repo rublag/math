@@ -1,0 +1,34 @@
+\section{Правильная часть ряда Лорана для $f(s) = e^{as}\,e^{b/s}$}
+\begin{Th*}
+Правильная часть ряда Лорана для функции
+\[
+    f(s) = e^{as}e^{b/s}
+\]
+Равна
+\[
+    \sum_{k=0}^{\infty} \left(\frac{s}{n}\right)^k \sum_{n=k}^{\infty} \frac{(ab)^n}{n!\,(n-k)!}
+\]
+\end{Th*}
+\begin{proof}
+Заменим экспоненты соответствующими рядами:
+\[
+    e^{as} e^{b/s} =
+%
+    \sum_{n=0}^{\infty} \frac{\left(as\right)^n}{n!}
+    \sum_{m=0}^{\infty} \frac{\left(b/s\right)^m}{m!}
+\]
+Обе функции аналитичны в $\CC \setminus \{0\}$, а потому их ряды сходятся абсолютно. Ряд для функции--произведения можно получить перемножением рядов по Коши.
+\[
+    e^{as} e^{b/s} =
+%
+    \sum_{k=-\infty}^{\infty} s^k \sum_{n-m=k} \chi(n \ge 0) \chi(m \ge 0) \frac{a^n\,b^m}{n!\,m!} =
+%
+    \sum_{k=-\infty}^{-1} s^k \sum_{n=0}^{\infty} \frac{a^n\,b^{n-k}}{n!\,(n-k)!} +
+    \sum_{k=0}^{\infty} s^k \sum_{n=k}^{\infty} \frac{a^n\,b^{n-k}}{n!\,(n-k)!}
+\]
+Упростим правильную часть:
+\[
+    \sum_{k=0}^{\infty} s^k \sum_{n=k}^{\infty} \frac{a^n\,b^{n-k}}{n!\,(n-k)!} =
+    \sum_{k=0}^{\infty} \left(\frac{s}{n}\right)^k \sum_{n=k}^{\infty} \frac{(ab)^n}{n!\,(n-k)!}
+\]
+\end{proof}

@@ -1,0 +1,57 @@
+\newcommand*{\CC}{\mathbb{C}}
+\newcommand*{\RR}{\mathds{R}}
+\newcommand*{\ZZ}{\mathds{Z}}
+\newcommand*{\NN}{\mathds{N}}
+\newcommand*{\QQ}{\mathds{Q}}
+
+\newcommand*{\EV}{\mathbf{E}}
+\newcommand*{\Var}{\mathbf{D}}
+\newcommand*{\PR}{\mathbf{P}}
+
+\newcommand*{\D}{\bm{D}}
+\newcommand*{\R}{\bm{R}}
+\newcommand{\BraceThree}{%
+	\multirow{3}{*}{$\left\{\begin{array}{@{}l@{}} \null \\ \null \\ \null\end{array}\right.$}%
+}
+
+\newcommand{\BraceTwo}{%
+	\multirow{2}{*}{$\left\{\begin{array}{@{}l@{}} \null \\ \null\end{array}\right.$}%
+}
+
+\renewcommand\qedsymbol{$\blacksquare$}
+
+\theoremstyle{plain}
+\newtheorem{Th}{Теорема}
+\newtheorem*{Th*}{Теорема}
+\newtheorem{Lem}{Лемма}
+\newtheorem*{Lem*}{Лемма}
+\newtheorem*{St}{Утверждение}
+\newtheorem*{Prop}{Свойства}
+
+\theoremstyle{definition}
+\newtheorem*{Def}{Определение}
+\newtheorem*{Ex}{Пример}
+\newtheorem*{Nam}{Обозначение}
+\newtheorem*{Agr}{Договоренность}
+
+\theoremstyle{remark}
+\newtheorem*{Rem}{Замечание}
+\newtheorem*{Probl}{Упражнение}
+
+\renewcommand{\proofname}{Доказательство}
+\addto\captionsrussian{
+	\renewcommand{\proofname}{Доказательство}
+}
+
+\newenvironment{amatrix}[1]{%
+	\left(\begin{array}{@{}*{#1}{c}|c@{}}
+	}{%
+	\end{array}\right)
+}
+
+\DeclareMathOperator*{\Res}{Res}
+\DeclareMathOperator{\PE}{E}
+\DeclareMathOperator{\PP}{P}
+
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}

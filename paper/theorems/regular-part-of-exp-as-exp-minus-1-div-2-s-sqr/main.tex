@@ -1,0 +1,30 @@
+\section{Правильная часть ряда Лорана для $f(s) = e^{as} e^{-1/(2s^2)}$}
+\begin{Th*}
+    Правильная часть ряда Лорана для функции
+\[
+    f(z) = e^{az} e^{-1/(2z^2)}
+\]
+Равна
+\[
+    \sum_{k=0}^{\infty} z^k \sum_{m=0}^{\infty} \frac{a^{2m+k} / (-2)^m}{(2m+k)!\,m!}
+\]
+\end{Th*}
+\begin{proof}
+Заменим экспоненты рядами:
+\[
+    e^{az} e^{-1/(2z^2)} =
+%
+    \left( \sum_{n=0}^{\infty} \frac{(az)^n}{n!} \right)
+    \left( \sum_{m=0}^{\infty} \frac{\left( -1 / \left( 2z^2 \right) \right)^m}{m!}  \right) 
+\]
+Обе функции аналитичны в $\CC \setminus \{0\}$, поэтому их ряды сходятся абсолютно. Находим ряд Лорана для $f$, перемножая по Коши эти два ряда:
+\[
+    e^{az} e^{-1/(2z^2)} =
+    \sum_{k=-\infty}^{\infty} z^k \sum_{n-2m=k} \chi(n \ge 0) \chi(m \ge 0) \frac{a^n / (-2)^m}{n!\,m!}
+\]
+Тогда правильная часть:
+\[
+    \sum_{k=0}^{\infty} z^k \sum_{n-2m=k} \chi(n \ge 0) \chi(m \ge 0) \frac{a^n / (-2)^m}{n!\,m!} =
+    \sum_{k=0}^{\infty} z^k \sum_{m=0}^{\infty} \frac{a^{2m+k} / (-2)^m}{(2m+k)!\,m!}
+\]
+\end{proof}
