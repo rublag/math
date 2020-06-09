@@ -9,6 +9,7 @@
 \usepackage[intlimits]{amsmath}  % Basic math structures
 \usepackage{amssymb}  % Extended symbols
 \usepackage{amsthm}  % Theorem environment
+\usepackage{bm}
 %
 \usepackage[a4paper,margin=0.5cm,includefoot,heightrounded]{geometry}
 \usepackage[colorlinks,unicode]{hyperref}
@@ -21,8 +22,11 @@
 \usepackage{titlesec}
 \usepackage{pgf}
 \usepackage{pgfplots}
+\usepackage{graphicx}
 %
 \usepackage{wrapfig}
+%
+\graphicspath{ {./int-figs/} }
 %
 \pgfplotsset{compat=1.16}
 %
@@ -30,6 +34,7 @@
 %
 \titleformat{\chapter}[block]{\normalfont\huge\bfseries\centering}{\S \thechapter.}{20pt}{\Huge}
 \include{helper}
+\DeclareMathOperator*{\argmin}{arg\,min}
 %
 \begin{document}
 %
@@ -399,9 +404,64 @@
     \right)
 \end{multline*}
 %
+К сожалению, такой способ не привел из-за непригодности для численных методов
+%
+\chapter{Альтернативный подход к задаче}
+Вспомним наше изначальное интегральное уравнение:
+\[
+    \psi_{m,n}(x) = \int_{0}^{\infty} g(xy) f_Y(y) dy  
+\]
+
+Преобразуем интеграл, чтобы интегрирование было по $xy$:
+\[
+    \psi_{m,n}(x) = \int_{0}^{\infty}  g(xy) f_Y(\frac{xy}{x}) d\frac{xy}{x}
+    = \int_{0}^{\infty} \int_{0}^{\infty} g(z) \frac{1}{x} f_Y(\frac{z}{x}) dz  
+\]
+
+Таким образом мы получили интегральное уравнение Фредгольма первого рода:
+\[
+    \psi_{m,n}(x) = \int_{0}^{\infty} K(x, z) g(z) dz 
+\]
+
+Дальше будем использовать равномерную сетку $\frac{1}{n_x}, \dots, \frac{l_x n_x}{n_x}]$ для $x$, $\frac{1}{n_z}, \dots, \frac{l_z n_z}{n_z}$ для $z$ 
+и дискретизируем наше уравнение. Получаем:
+\[
+    \psi_{m,n}[x] = \int_{0}^{\infty} K[x,z] g[z] dz = \frac{1}{n_z} \sum_{p=1}^{l_z n_z} g\left(\frac{p}{n_z}\right) K\left[x, \frac{p}{n_z}\right]
+\]
+
+Таким образом, мы получили систему линейных уравнений. Запишем их в матричном виде:
+\[
+    \bm{\psi}_{m,n} = \frac{1}{n_z} \bm{K} \bm{g}
+\]
+
+Увеличим матрицу K, чтобы добавить регуляризацию.
+\[
+    \bm{\tilde K} = 
+    \begin{pmatrix}
+        \bm{K} \\
+        \alpha \bm{E}
+    \end{pmatrix}
+\]
+
+И соответствующий $\bm{\tilde f}$:
+\[
+    \bm{\tilde f} = 
+    \begin{pmatrix}
+        \bm{f} \\
+        \bm{0}
+    \end{pmatrix}
+\]
+
+И будем использовать МНК-оптимизацию. Получаем:
+\[
+    \bm{g_*} = \argmin_{\bm{g}} \| \bm{\tilde K} \bm{g} - \bm{f} \|
+\]
+%
 %
 \chapter{Эксперименты}
 %
+Для аналитического способа.
+
 \begin{tabular}{ l l l l }
 \hline
     Функция        & Способ вычисления                              & Машинная точность                     & Значение                  \\ 
@@ -418,6 +478,28 @@
                    & численно, ряд                                  & 256 двоичных знаков                   & $-0.440$                  \\
 \hline
 \end{tabular}
+
+\bigskip
+
+Для численного вычисления интеграла. Мы использовали шаг $0{,}1$ и $\alpha = 0{,}1$. И использовали $m=\{-5, \dots, 5\}$, $n=\{-5, \dots, 5\}$
+
+\begin{figure}[h]
+    \caption{$X \sim \mathcal{N}(0, 1)$}
+    \centering
+    \includegraphics[width=0.75\textwidth]{norm}
+\end{figure}
+
+\begin{figure}[h]
+    \caption{$X \sim \exp(1)$}
+    \centering
+    \includegraphics[width=0.75\textwidth]{exp}
+\end{figure}
+
+\begin{figure}[h]
+    \caption{$X \sim \chi^2_5$}
+    \centering
+    \includegraphics[width=0.75\textwidth]{chisq}
+\end{figure}
 \input{theorems/main.tex}
 %
 \end{document}
