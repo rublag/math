@@ -1,6 +1,6 @@
 \RequirePackage[l2tabu,orthodox]{nag}
 %
-\documentclass[a4paper]{report}
+\documentclass[12pt, a4paper]{report}
 %
 \usepackage[utf8]{inputenc}
 \usepackage[T1,T2A]{fontenc}
@@ -11,7 +11,7 @@
 \usepackage{amsthm}  % Theorem environment
 \usepackage{bm}
 %
-\usepackage[a4paper,margin=0.5cm,includefoot,heightrounded]{geometry}
+\usepackage[a4paper,margin=3cm,includefoot,heightrounded]{geometry}
 \usepackage[colorlinks,unicode]{hyperref}
 \usepackage{layout}
 \usepackage{dsfont}
@@ -30,7 +30,6 @@
 %
 \pgfplotsset{compat=1.16}
 %
-\pagestyle{plain}
 %
 \titleformat{\chapter}[block]{\normalfont\huge\bfseries\centering}{\S \thechapter.}{20pt}{\Huge}
 \include{helper}
@@ -38,7 +37,71 @@
 %
 \begin{document}
 %
+\thispagestyle{empty}
+\sloppy
+\begin{titlepage}
+\begin{center}
+Московский государственный университет имени~М.~В.~Ломоносова\\
+механико-математический факультет\\
+кафедра математической статистики и случайных процессов\\
+
+
+\centering
+\includegraphics[width=0.3\textwidth]{mechmath.jpg}
+
+
+\vspace*{100pt} Курсовая работа\\студента 403 группы \\
+Купряков Василия Юрьевича
+\\
+\vspace{10pt} {\Large{\textbf{Непараметрическая оценка плотности мультипликативно зашумленных данных}}\\}
+
+\vspace*{40pt}
+
+\begin{flushright}
+Научный руководитель:\\ с.н.с., к.ф.-м.н.\\  Шкляев Александр Викторович\\
+\end{flushright}
+
+\vspace*{\fill} Москва, 2020
+\end{center}
+\end{titlepage}
+\clearpage
+%
 \tableofcontents
+%
+\chapter{Введение}
+В работу мы изучим задачу, которая возникает при исследовании примесий в жидкости.
+
+Примеси в исследуемой жидкости --- это движущиеся частицы с размерами порядка $10^{-8}$ м.
+Жидкость просвечивают лазером, а камера фиксирует частицы, которые попали в луч.
+
+Получается последовательность изображений. Для каждой частицы эта последовательность является
+последовательностью проекций частиц на площадь камеры. Мы можем построить векторы перемещений
+частиц в проекции на плоскость камеры по этим снимкам. Для отдельной частицы такие перемещения
+образуют броуновское движение с нулевым сносом и дисперсией $\sigma^2 = c/d$, где $c$ --- некоторая
+константа, а $d$ --- размер частицы.
+
+Проблема в том, что размер частицы не связан напрямую с размером ее изображения. Наша задача ---
+оценить распределение истинных размеров частиц по размерам на снимках.
+
+Будем изучать равносильную задачу: оценить распределение $\sigma^2$.
+Рассмотрим $n$ случайно выбранных частиц $E_1, \dots, E_n$. Обозначим дисперсии для
+их движения как $\sigma_1^2, \dots, \sigma_n^2$. Для $i$-й частицы у нас есть два
+$k(i)$-мерных вектора перемещений: $A_i^1, \dots, A_i^{k(i)}$ по оси $x$ 
+и $A_i^{k(i)+1}, \dots, A_i^{2k(i)}$ по оси $y$. Мы будем рассматривать только частный случай,
+когда все $k(i)$ равны $k$, а $\sigma_i^2$ непрерывна.
+
+$A_i^1, \dots, A_i^{2k}$ условно независимы при условии $\sigma_i^2$ и имеют условное
+распределение $\mathcal{N}\left(0, \sigma_i^2\right)$. Дальше вместо выборки
+$A_i^1, \dots, A_i^{2k}$ будем рассматривать достаточную статистику $Z_i = \sum\limits_{j=1}^{2k} \left(A_i^j\right)^2$.
+Заметим далее, что $Z_i = \sigma_i^2 Y_i$, где $Y_i \sim \chi^2_{2k}$.
+При этом, $Y_i$ независимы и не зависят от дисперсии $\sigma_i^2$.
+
+Обозначим $X_i = \sigma_i^2$. Тогда задачу можно сформулировать так:
+$X_1, \dots, X_n$ --- независимые одинаково распределенные случайные величины
+с неизвестным распределением и положительным носителем; 
+$Y_1, \dots, Y_n$ --- независимые от них н.о.р. с.в. с распределением $\chi^2_{2k}$;
+$Z_1, \dots, Z_n = X_1 Y_1, \dots, X_n Y_n$ --- наблюдаемые случайные величины;
+а сама задача --- по наблюдениям $Z_1, ..., Z_n$ оценить распределение $X_1$.
 %
 \input{chap1/main.tex}
 %
@@ -486,19 +549,19 @@
 \begin{figure}[h]
     \caption{$X \sim \mathcal{N}(0, 1)$}
     \centering
-    \includegraphics[width=0.75\textwidth]{norm}
+    \includegraphics[width=\textwidth]{norm}
 \end{figure}
 
 \begin{figure}[h]
     \caption{$X \sim \exp(1)$}
     \centering
-    \includegraphics[width=0.75\textwidth]{exp}
+    \includegraphics[width=\textwidth]{exp}
 \end{figure}
 
 \begin{figure}[h]
     \caption{$X \sim \chi^2_5$}
     \centering
-    \includegraphics[width=0.75\textwidth]{chisq}
+    \includegraphics[width=\textwidth]{chisq}
 \end{figure}
 \input{theorems/main.tex}
 %
