@@ -6,16 +6,17 @@
 Пусть $c>0$; $\alpha$ такое, что все особенности $f$ лежат левее $c\alpha$. Тогда
 \[
     L^{-1}_u \left[ f(cu) \right](t) = L^{-1}_s \left[ \frac{1}{c}f(s) \right]\left(\frac{t}{c}\right)
-\]
+.\]
 \end{Th*}
 \begin{proof}
-\begin{align*}
-    & L^{-1}_u\left[f\left(cu\right)\right](t) 
+\begin{multline*}
+    L^{-1}_u\left[f\left(cu\right)\right](t) 
     = \int_{\alpha-i\infty}^{\alpha+i\infty} e^{ut}f(cu)du 
     = \frac{1}{c} \int_{\alpha-i\infty}^{\alpha+i\infty} e^{\left(cu\right) \frac{t}{c}} f(cu) d\left(cu\right)
-    = \frac{1}{c} \int_{c\alpha-i\infty}^{c\alpha+i\infty} e^{s\frac{t}{c}} f(s) ds
+=\\=
+    \frac{1}{c} \int_{c\alpha-i\infty}^{c\alpha+i\infty} e^{s\frac{t}{c}} f(s) ds
     = L^{-1}_s \left[ \frac{1}{c} f(s) \right]\left( \frac{t}{c} \right)  
-\end{align*}
+.\end{multline*}
 \end{proof}
 %
 \input{theorems/product-of-analytic-function-and-function-with-zero-regular-part/main.tex}

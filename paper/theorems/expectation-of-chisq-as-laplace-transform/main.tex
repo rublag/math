@@ -4,20 +4,21 @@
 Пусть $f$ --- функция плотности $\chi^2_{2k}$; $a > 0$. Тогда
 \[
     Eg(aY) = \left(\frac{1}{2a}\right)^k \frac{1}{\Gamma(k)} L_z \left[ g(z) z^{k-1}  \right] \left( \frac{1}{2a} \right) 
-\]
+.\]
 \end{Th*}
 \begin{proof}
 \[
     Eg(aY) = \int_{0}^{\infty} g(ay) f(y) dy  
-\]
+.\]
 Подставим функцию плотности:
 \[
     Eg(aY) = \int_{0}^{\infty} g(ay) \frac{1}{\Gamma(k)} \frac{1}{2^k} y^{k-1} e^{-y/2} dy 
-\]
+.\]
 Возьмем $z = ay$:
-\[
-    Eg(aY) = \int_{0}^{\infty} g(z) \frac{1}{\Gamma(k)} \frac{1}{2^k} \left( \frac{z}{a} \right)^{k-1} e^{-z/(2a)} \frac{dz}{a} =
+\begin{multline*}
+    Eg(aY) = \int_{0}^{\infty} g(z) \frac{1}{\Gamma(k)} \frac{1}{2^k} \left( \frac{z}{a} \right)^{k-1} e^{-z/(2a)} \frac{dz}{a}
+=\\=
     \left( \frac{1}{2a} \right)^k \frac{1}{\Gamma(k)} \int_{0}^{\infty} g(z) z^{k-1} e^{-z \left( \frac{1}{2a} \right) } dz = 
     \left( \frac{1}{2a} \right)^k \frac{1}{\Gamma(k)} L_z \left[ g(z) z^{k-1} \right] \left( \frac{1}{2a} \right) 
-\]
+.\end{multline*}
 \end{proof}
