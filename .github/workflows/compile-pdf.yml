@@ -23,3 +23,4 @@ jobs:
       uses: xu-cheng/latex-action@v2
       with:
         root_file: paper/paper.tex
+        working_directory: paper
