@@ -24,3 +24,8 @@ jobs:
       with:
         root_file: paper.tex
         working_directory: paper
+    
+    - name: Upload PDF as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        path: paper/paper.pdf
