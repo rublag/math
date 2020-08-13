@@ -1,7 +1,9 @@
 import numpy as np
 import scipy.optimize
+import scipy.linalg
 import pickle as pkl
 import math
+import torch
 
 from numba import jit, njit
 
@@ -11,9 +13,13 @@ def NNETR(K, f, Delta, epsilon, alpha):
     # the first step
     A_nn = np.vstack((K, alpha * np.identity(K.shape[1])))
     b_nn = np.hstack((f, np.zeros(K.shape[1])))
-    
+
     # Use NNLS solver provided by scipy
-    res = scipy.optimize.lsq_linear(A_nn, b_nn, verbose=2)
+    # res = scipy.optimize.lsq_linear(A_nn, b_nn, verbose=2)['x']
+    # res = scipy.linalg.lstsq(A_nn, b_nn)
+    at = torch.tensor(A_nn).cuda()
+    bt = torch.tensor(b_nn).cuda().unsqueeze(1)
+    res = torch.lstsq(bt, at)[0].cpu().numpy().squeeze()[:A_nn.shape[1]]
 
     # solution should be divided by Delta (grid size)
     # sol = sol/Delta
@@ -65,30 +71,31 @@ X = np.random.normal(1, 1/4, 1000)
 Y = np.random.chisquare(10, 1000)
 Z = X*Y
 
-all_gs = []
-egs = []
-efs = []
-for m in range(-5, 5):
-    m_gs = []
-    egs_m = []
-    efs_m = []
-    for n in range(-5, 5):
-        fa = genfa(fmn, m, n, xmin, xmax, xsteps)
-        res = NNETR(ka, fa, 0.1, 0.1, 0.1)['x'] / 0.1
-        m_gs.append(res)
-        egs_m.append(np.mean(np.interp(Z, np.linspace(xmin, xmax, xsteps), res)))
-        efs_m.append(np.mean(fmn(X, m, n)))
-        print(f'm: {m}, n: {n}')
-    all_gs.append(m_gs)
-    egs.append(egs_m)
-    efs.append(efs_m)
+if __name__ == '__main__':
+    all_gs = []
+    egs = []
+    efs = []
+    for m in range(-5, 5):
+        m_gs = []
+        egs_m = []
+        efs_m = []
+        for n in range(-5, 5):
+            fa = genfa(fmn, m, n, xmin, xmax, xsteps)
+            res = NNETR(ka, fa, 0.1, 0.1, 0.1) / 0.1
+            m_gs.append(res)
+            egs_m.append(np.mean(np.interp(Z, np.linspace(xmin, xmax, xsteps), res)))
+            efs_m.append(np.mean(fmn(X, m, n)))
+            print(f'm: {m}, n: {n}')
+        all_gs.append(m_gs)
+        egs.append(egs_m)
+        efs.append(efs_m)
 
-pkl.dump(all_gs, open('res.pkl', 'wb'))
-pkl.dump(egs, open('egs.pkl', 'wb'))
-pkl.dump(efs, open('efs.pkl', 'wb'))
+    pkl.dump(all_gs, open('res.pkl', 'wb'))
+    pkl.dump(egs, open('egs.pkl', 'wb'))
+    pkl.dump(efs, open('efs.pkl', 'wb'))
 
-print('f')
-print(efs)
-print()
-print('g')
-print(egs)
+    print('f')
+    print(efs)
+    print()
+    print('g')
+    print(egs)
