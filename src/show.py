@@ -1,61 +1,67 @@
 import numpy as np
 import pickle as pkl
 import scipy.stats as ss
+import sys
 
 from matplotlib import pyplot as plt
+from numba import jit, njit
 
 
-def psi(t):
-    return 2./np.sqrt(3.*np.sqrt(np.pi)) * (1.-t**2) * np.exp(-(t**2)/2)
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print("USAGE: show.py result_filename")
+        sys.exit(1)
+
+    res = pkl.load(open(sys.argv[1], 'rb'))
+
+    psi = res['psi']
+    f_mn = res['f_mn']
+    gs_all = res['gs']
+    config = res['config']
+
+    X = np.random.chisquare(5, 1000)
+    Y = np.random.chisquare(20, 1000)
+    Z = X*Y
+
+    xmin, xmax, xsteps = config['xmin'], config['xmax'], config['xsteps']
+    smin, smax, ssteps = config['smin'], config['smax'], config['ssteps']
+    mmin, mmax = config['mmin'], config['mmax']
+    nmin, nmax = config['nmin'], config['nmax']
+    savefile = config['save']
+    device_name = config['device']
+
+    egs = []
+    efs = []
+    for m in range(mmin, mmax+1):
+        egs_m = []
+        efs_m = []
+        for n in range(nmin, nmax+1):
+            egs_m.append(np.mean(np.interp(Z, np.linspace(xmin, xmax, xsteps), gs_all[m-mmin][n-nmin], right=0)))
+            efs_m.append(np.mean(f_mn(X, m, n)))
+        egs.append(egs_m)
+        efs.append(efs_m)
 
 
-def fmn(t, m, n):
-    return 1./np.sqrt((2.)**m) * psi(t/((2.)**m) - n)
+    ts = np.arange(0, 10, 0.001)
+    fy = gy = ry = 0
 
-#X = np.random.normal(1, 1/4, 1000)
-#X = np.random.exponential(1, 1000)
-X = np.random.chisquare(5, 1000)
-Y = np.random.chisquare(20, 1000)
-Z = X*Y
-print(max(Z))
-
-xmin, xmax, xsteps = 0, 1000, 10000
-
-egs = []
-efs = []
-all_gs = pkl.load(open('res.pkl', 'rb'))
-for m in range(-5, 5):
-    egs_m = []
-    efs_m = []
-    for n in range(-5, 5):
-        egs_m.append(np.mean(np.interp(Z, np.linspace(xmin, xmax, xsteps), all_gs[m+5][n+5], right=0)))
-        efs_m.append(np.mean(fmn(X, m, n)))
-        print(f'm: {m}, n: {n}')
-    egs.append(egs_m)
-    efs.append(efs_m)
+    c = 2/(3.223+3.596)
 
 
-ts = np.arange(0, 10, 0.001)
-fy = gy = ry = 0
+    for m in range(mmin, mmax+1):
+        for n in range(nmin, nmax+1):
+            fy = fy + c*efs[m-mmin][n-nmin]*f_mn(ts, m, n)
+            gy = gy + c*egs[m-mmin][n-nmin]*f_mn(ts, m, n)
 
-c = 2/(3.223+3.596)
+    #ry = ss.norm.pdf(ts, 1, 1/4)
+    ry = ss.chi2.pdf(ts, 5)
+    #ry = ss.expon.pdf(ts)
 
-
-for m in range(-5, 5):
-    for n in range(0, 5):
-        fy = fy + c*efs[m+5][n+5]*fmn(ts, m, n)
-        gy = gy + c*egs[m+5][n+5]*fmn(ts, m, n)
-
-#ry = ss.norm.pdf(ts, 1, 1/4)
-ry = ss.chi2.pdf(ts, 5)
-#ry = ss.expon.pdf(ts)
-
-fig, ax = plt.subplots()
-ax.set_ylim(0, 1)
-ax.set_xlim(0, 5)
-ax.plot(ts, fy, label='wavelet reconstruction ($ \\sum E \\psi_{mn} (X))$)')
-ax.plot(ts, gy, label='estimation ($\\sum E g_{mn} (Z)$)')
-ax.plot(ts, ry, label='real density')
-ax.legend()
-plt.show()
-
+    fig, ax = plt.subplots()
+    ax.set_ylim(0, 1)
+    ax.set_xlim(0, 5)
+    ax.plot(ts, fy, label='wavelet reconstruction ($ \\sum E \\psi_{mn} (X))$)')
+    ax.plot(ts, gy, label='estimation ($\\sum E g_{mn} (Z)$)')
+    ax.plot(ts, ry, label='real density')
+    ax.legend()
+    plt.show()
