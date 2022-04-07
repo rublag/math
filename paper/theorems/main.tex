@@ -1,26 +1,14 @@
 \chapter{Теоремы}
-\input{theorems/expectation-of-chisq-as-laplace-transform/main.tex}
+\subfile{theorems/chisq-laplace}
 %
-\section{Замена переменной в обратном преобразовании Лапласа}
-\begin{Th*}
-Пусть $c>0$; $\alpha$ такое, что все особенности $f$ лежат левее $c\alpha$. Тогда
-\[
-    L^{-1}_u \left[ f(cu) \right](t) = L^{-1}_s \left[ \frac{1}{c}f(s) \right]\left(\frac{t}{c}\right)
-.\]
-\end{Th*}
-\begin{proof}
-\begin{multline*}
-    L^{-1}_u\left[f\left(cu\right)\right](t) 
-    = \int_{\alpha-i\infty}^{\alpha+i\infty} e^{ut}f(cu)du 
-    = \frac{1}{c} \int_{\alpha-i\infty}^{\alpha+i\infty} e^{\left(cu\right) \frac{t}{c}} f(cu) d\left(cu\right)
-=\\=
-    \frac{1}{c} \int_{c\alpha-i\infty}^{c\alpha+i\infty} e^{s\frac{t}{c}} f(s) ds
-    = L^{-1}_s \left[ \frac{1}{c} f(s) \right]\left( \frac{t}{c} \right)  
-.\end{multline*}
-\end{proof}
+\subfile{theorems/laplace-var-change}
 %
-\input{theorems/product-of-analytic-function-and-function-with-zero-regular-part/main.tex}
-\input{theorems/regular-part-of-exp-as-exp-b-div-s/main.tex}
-\input{theorems/regular-part-of-exp-as-exp-minus-1-div-2-s-sqr/main.tex}
-\input{theorems/regular-part-of-exp-as-exp-minus-1-div-2-s-sqr-exp-b-div-s/main.tex}
-\input{theorems/jordan-lemma/jordan-lemma.tex}
+\subfile{theorems/product-series}
+%
+\subfile{theorems/laurent-1}
+%
+\subfile{theorems/laurent-2}
+%
+\subfile{theorems/laurent-3}
+%
+\subfile{theorems/modified-jordan.tex}

@@ -1,0 +1,80 @@
+\documentclass[../paper.tex]{subfiles}
+\begin{document}
+\chapter{Эксперименты}
+%
+Для аналитического способа.
+
+\begin{tabular}{ l l l l }
+\hline
+    Функция        & Способ вычисления                              & Машинная точность                     & Значение                  \\ 
+                   &                                                & (размер мантиссы),                    &                           \\
+\hline%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    $g_{0,0}(1)$   & численно, интеграл,                            & 100 десятичных знаков                 & $ 0.864$                  \\
+	           & контур $[1-100i, 1+100i]$                      &                                       &                           \\
+
+	           & численно, ряд                                  & 256 двоичных знаков                   & $ 0.864$                  \\
+
+    $g_{0,0}(10)$  & численно, интеграл                             & 100 десятичных знаков                 & $ 0.591$                  \\
+                   & контур $[1-100i, 1+100i]$                      &                                       &                           \\
+
+                   & численно, ряд                                  & 256 двоичных знаков                   & $ 0.591$                  \\
+
+    $g_{0,0}(100)$ & численно, интеграл                             & 100 десятичных знаков                 & $-2 \times 10^{19}$       \\
+	           & контур $[1-10i, 1+10i]$                        &                                       &                           \\
+		   
+                   & численно, ряд                                  & 256 двоичных знаков                   & $-0.440$                  \\
+\hline
+\end{tabular}
+
+\bigskip
+
+Для численного вычисления интеграла. Мы использовали шаг $0{,}1$ и $\alpha = 0{,}1$. И использовали $m=\{-5, \dots, 5\}$, $n=\{-5, \dots, 5\}$.
+
+\begin{figure}[h]
+    \caption{$X \sim \mathcal{N}(0, 1)$}
+    \centering
+    \includegraphics[width=\textwidth]{norm}
+\end{figure}
+
+\begin{figure}[h]
+    \caption{$X \sim \exp(1)$}
+    \centering
+    \includegraphics[width=\textwidth]{exp}
+\end{figure}
+
+\begin{figure}[h]
+    \caption{$X \sim \chi^2_5$}
+    \centering
+    \includegraphics[width=\textwidth]{chisq}
+\end{figure}
+
+\begin{figure}[h]
+  \caption{Сравнение функций ошибок для метода градиентного спуска}
+  \centering
+  \includegraphics[width=\textwidth]{comp-loss}
+\end{figure}
+
+\begin{figure}[h]
+  \caption{Сравнение методов градиентного спуска, итеративного и МНК-оценки}
+  \centering
+  \includegraphics[width=\textwidth]{comp-method}
+\end{figure}
+
+\begin{figure}[h]
+  \caption{МНК-оценка для смеси нормальных распределений}
+  \centering
+  \includegraphics[width=\textwidth]{est-lse}
+\end{figure}
+
+\begin{figure}[h]
+  \caption{Оценка методом градиентного спуска для смеси нормальных распределений}
+  \centering
+  \includegraphics[width=\textwidth]{est-l2}
+\end{figure}
+
+\begin{figure}[h]
+  \caption{Оценка итеративным методом для смеси нормальных распределений}
+  \centering
+  \includegraphics[width=\textwidth]{est-it}
+\end{figure}
+\end{document}
