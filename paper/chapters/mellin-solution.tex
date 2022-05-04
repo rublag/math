@@ -1,7 +1,7 @@
 \documentclass[../paper.tex]{subfiles}
 \graphicspath{{\subfix{../figs/}}}
 \begin{document}
-\chapter{Вычисление обратного преобразования Лапласа с помощью формулы Меллина и основной теоремы о вычетах}
+\section{Вычисление обратного преобразования Лапласа с помощью формулы Меллина и основной теоремы о вычетах}
 
 Мы выразили $g_{m,n}(t)$ как:
 \begin{equation}\label{eq:gmn}
@@ -55,7 +55,7 @@
 
 Отсюда видно, что достаточно найти $L^{-1}_u [\frac{1}{u^k} r_{m,n}(u)](t)$ для каждого $k$.
 
-\section{Находим $L^{-1}_u [\frac{1}{u^k} r_{m,n}(u)](t)$}
+\subsubsection{Находим $L^{-1}_u [\frac{1}{u^k} r_{m,n}(u)](t)$}
 Выше мы ввели
 \[
     L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t)
@@ -107,7 +107,7 @@
     \right)
     \right] \left( \frac{t}{2^{m+1}} \right)
 .\]
-\section{Находим обратное преобразование Лапласа}
+\subsubsection{Находим обратное преобразование Лапласа}
 В предыдущем разделе мы выразили:
 \begin{equation}\label{eq:invlap}
     L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) =
@@ -176,7 +176,7 @@
     \frac{1}{2\pi i} 2\pi i \Res_0 \left( e^{s\tau} \frac{1}{s^k} e^{-1/(2s^2)} e^{n/s} ds \right)
 .\]
 У нас возникает два случая: $n=0$ и $n\neq$0
-\subsection{Случай $n = 0$}
+\subsubsection{Случай $n = 0$}
 Воспользуемся теоремой о правильной части функции $e^{s\tau} e^{-1/(2s^2)}$. Нам нужен $k-1$-й член ряда Лорана. Получаем:
 \[
     \frac{1}{2\pi i}\int_{\alpha-i\infty}^{\alpha+i\infty} e^{s\tau} \frac{1}{s^k} e^{-1/(2s^2)} e^{n/s} ds =
@@ -257,7 +257,7 @@
 %
     \right)
 .\]
-\subsection{Случай $n \neq 0$}
+\subsubsection{Случай $n \neq 0$}
 Воспользуемся теоремой о правильной части функции $e^{s\tau} e^{-1/(2s^2)} e^{n/s}$. Нам нужен $k-1$-й член ряда Лорана. Получаем:
 \[
     \frac{1}{2\pi i}\int_{\alpha-i\infty}^{\alpha+i\infty} e^{s\tau} \frac{1}{s^k} e^{-1/{2s^2}} e^{n/s} ds =
@@ -338,7 +338,7 @@
     \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+i} / (-2)^j}{(2j+k+1+i)!\,j!} \frac{n^i}{i!}
     \right)
 .\end{multline*}
-\section{Результат}
+\subsection{Результат}
 Выпишем обе полученные формулы вместе:
 \[
     g_{m,0}(t) =

@@ -1,6 +1,6 @@
 \RequirePackage[l2tabu,orthodox]{nag}
 %
-\documentclass[12pt, a4paper]{report}
+\documentclass[12pt, a4paper]{article}
 %
 \usepackage[utf8]{inputenc}
 \usepackage[T1,T2A]{fontenc}
@@ -47,36 +47,11 @@
 %
 \begin{document}
 %
-\thispagestyle{empty}
-\sloppy
-\begin{titlepage}
-\begin{center}
-Московский государственный университет имени~М.~В.~Ломоносова\\
-механико-математический факультет\\
-кафедра математической статистики и случайных процессов\\
-
-\centering
-\includegraphics[width=0.3\textwidth]{mechmath.jpg}
-
-\vspace*{100pt} Курсовая работа\\студента 503 группы \\
-Купрякова Василия Юрьевича
-\\
-\vspace{10pt} {\Large{\textbf{Непараметрическая вейвлет-оценка плотности мультипликативно зашумленных данных}}\\}
-
-\vspace*{40pt}
-
-\begin{flushright}
-Научный руководитель:\\ с.н.с., к.ф.-м.н.\\  Шкляев Александр Викторович\\
-\end{flushright}
-
-\vspace*{\fill} Москва, 2021
-\end{center}
-\end{titlepage}
-\clearpage
-%
-\tableofcontents
+\subfile{chapters/title}
 %
 \subfile{chapters/introduction}
+%
+\subfile{chapters/preliminary}
 %
 \subfile{chapters/inverse-laplace}
 %
@@ -90,7 +65,7 @@
 %
 \subfile{chapters/results}
 %
-\input{theorems/main}
+%\input{theorems/main}
 %
 \printbibliography
 \end{document}
