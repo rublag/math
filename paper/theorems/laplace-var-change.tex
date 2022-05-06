@@ -1,20 +1,29 @@
 \documentclass[../paper.tex]{subfiles}
 \begin{document}
-\section{Замена переменной в обратном преобразовании Лапласа}
-\begin{Th*}
-Пусть $c>0$; $\alpha$ такое, что все особенности $f$ лежат левее $c\alpha$. Тогда
+\begin{Lem}[Замена переменной в обратном преобразовании Лапласа]
+\label{laplace-var-change}
+Пусть существует $L^{-1}_u [f(cu](t)$, $c>0$.
+Тогда
 \[
     L^{-1}_u \left[ f(cu) \right](t) = L^{-1}_s \left[ \frac{1}{c}f(s) \right]\left(\frac{t}{c}\right)
 .\]
-\end{Th*}
+\end{Lem}
 \begin{proof}
-\begin{multline*}
-    L^{-1}_u\left[f\left(cu\right)\right](t) 
-    = \int_{\alpha-i\infty}^{\alpha+i\infty} e^{ut}f(cu)du 
-    = \frac{1}{c} \int_{\alpha-i\infty}^{\alpha+i\infty} e^{\left(cu\right) \frac{t}{c}} f(cu) d\left(cu\right)
-=\\=
-    \frac{1}{c} \int_{c\alpha-i\infty}^{c\alpha+i\infty} e^{s\frac{t}{c}} f(s) ds
-    = L^{-1}_s \left[ \frac{1}{c} f(s) \right]\left( \frac{t}{c} \right)  
-.\end{multline*}
+Воспользуемся формулой Меллина:
+\[
+	L^{-1}_u\left[f\left(cu\right)\right](t) 
+	= \int_{\alpha-i\infty}^{\alpha+i\infty} e^{ut}f(cu)du 
+	= \frac{1}{c} \int_{\alpha-i\infty}^{\alpha+i\infty} e^{\left(cu\right) (t/c)} f(cu) d\left(cu\right)
+.\]
+Произведем замену $s=cu$
+\[
+	L^{-1}_u\left[f\left(cu\right)\right](t)
+	= \frac{1}{c} \int_{c\alpha-i\infty}^{c\alpha+i\infty} e^{s (t/c)} f(s) ds
+.\]
+Заменим интеграл на обратное преобразование Лапласа
+\[
+	L^{-1}_u\left[f\left(cu\right)\right](t)
+	= L^{-1}_s \left[ \frac{1}{c} f(s) \right]\left( \frac{t}{c} \right)  
+\]
 \end{proof}
 \end{document}

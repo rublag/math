@@ -1,49 +1,71 @@
 \documentclass[../paper.tex]{subfile}
 \begin{document}
-\section {Модифицированная лемма Жордана}
 Лемма Жордана позволяет использовать основную теорему о вычетах для интеграла по контуру $(-\infty, \infty)$.
 Обратное преобразование Лапласа можно найти, используя интеграл Меллина. Этот интеграл использует контур $(\alpha - i\infty, \alpha + i\infty)$.
 Если мы модифицируем лемму Жордана, чтобы она использовала контур в виде левой полуокружности с центром в $\alpha$, то сможем использовать основную теорему о вычетах для вычисления обратного преобразования Лапласа.
 %
 \begin{Th*}[Модифицированная лемма Жордана] $ $ \\
-    Пусть $\alpha$, $t$ > 0; 
-    $F(s)$ непрерывна в области $G = \{\Re s \le  \alpha \} \cap \{ |s-\alpha| \ge  R_0 > 0 \}$;
-	$C_R$ --- полуокружность $|z-\alpha| = R$ в $G$;
-	$\lim\limits_{R \to \infty} \sup\limits_{s \in C_R} |F(s)| = 0$. \\
-    Тогда $\lim\limits_{R \to \infty} \int\limits_{C_R} e^{ts} F(s)ds = 0$.
+Пусть $\alpha$, $t$, $R_0$ > 0, 
+функция $F(s)$ непрерывна в области 
+\[
+	G = \{s \mid \Re s \le  \alpha \} \cap \{ s \mid |s-\alpha| \ge  R_0 > 0 \}
+\]
+Обозначим $C_R$ --- полуокружность $|z-\alpha| = R$ в области $G$.
+И пусть выполняется:
+\[
+	\lim\limits_{R \to \infty} \sup\limits_{s \in C_R} |F(s)| = 0
+.\]
+Тогда
+\[
+	\lim_{R \to \infty} \int_{C_R} e^{ts} F(s)ds = 0
+.\]
 \end{Th*}
 \begin{proof} $ $ \\
 %
 \input{theorems/jordan-lemma/jordan-lemma-path-figure.tex}
 
-По условию, $\forall \varepsilon > 0 \ \  \exists R \ \ \forall s \in C_R \quad \left| F(s) \right| = \left| F\left(\alpha + Re^{i\varphi}\right) \right|  < \varepsilon$, тогда
-%
-\begin{align*}
-    & \left|\int_{C_R} e^{ts} F(s) ds\right| \le
-      \int_{C_R} \left|e^{ts} F(s)\right| |ds| \le
-      \varepsilon \int_{C_R} \left|e^{ts}\right| |ds|  \\
-%
-    & \text{Рассмотрим на $C_R$: } \left|e^{ts}\right| = \left|e^{t\left(\alpha+R\cos\varphi+Ri\sin\varphi\right)}\right| = e^{t\left(\alpha + R\cos\varphi\right)} \\
-%
-    & \text{Отсюда: } \varepsilon \int_{C_R} \left|e^{st}\right| |ds| = 
-      \varepsilon \int_{\frac{\pi}{2}}^{\frac{3\pi}{2}} e^{\alpha t + R t \cos \varphi} \left|d\left(Re^{i\varphi}\right)\right| = \\
-%
-    & \varepsilon \int_{\frac{\pi}{2}}^{\frac{3\pi}{2}} \left|e^{\alpha t + R t \cos \varphi} R i e^{i\varphi} \right| d\varphi = 
-      R\varepsilon e^{\alpha t} \int_{\frac{\pi}{2}}^{\frac{3\pi}{2}} e^{R t \cos\varphi} d\varphi = 
-      R\varepsilon e^{\alpha t} \int_{0}^{\pi} e^{R t \cos \left(\varphi + \frac{\pi}{2}\right)} d\varphi = \\
-%
-    & R\varepsilon e^{\alpha t} \int_{0}^{\pi} e^{-R t \sin\varphi} d\varphi = 
-      2R\varepsilon e^{\alpha t} \int_{0}^{\frac{\pi}{2}} e^{-R t \sin\varphi} d\varphi \\
-%
-    & \text{На $[0, \frac{\pi}{2}]$ } \sin\varphi \ge \frac{2}{\pi} \varphi \\
-%
-    & \implies 2R\varepsilon e^{\alpha t} \int_{0}^{\frac{\pi}{2}} e^{-R t \sin\varphi} d\varphi \le
-      2R\varepsilon e^{\alpha t} \int_{0}^{\frac{\pi}{2}} e^{-R t \frac{2}{\pi}\varphi} d\varphi = \\
-%
-    & 2R\varepsilon e^{\alpha t} \left.\left( \frac{1}{-\frac{2Rt}{\pi}}e^{- \frac{2 R t \varphi}{\pi}} \right) \right|_0^{\frac{\pi}{2}} = 
-         \frac{\pi\varepsilon}{t} e^{\alpha t} \left(1 - e^{- R t} \right) \xrightarrow[R \to \infty]{} 0
-.\end{align*}
-
+По условию, 
+\[
+	\forall \varepsilon > 0 \ \  \exists R \ \ \forall s \in C_R \quad \left| F(s) \right| = \left| F\left(\alpha + Re^{i\varphi}\right) \right|  < \varepsilon
+,\] тогда
+\[
+	\left|\int_{C_R} e^{ts} F(s) ds\right|
+	\le \int_{C_R} \left|e^{ts} F(s)\right| |ds|
+	\le \varepsilon \int_{C_R} \left|e^{ts}\right| |ds|
+.\]
+На полуокружности $C_R$ мы можем представить экспоненту $e^{ts}$ в виде:
+\[
+	\left|e^{ts}\right|
+	= \left|e^{t\left(\alpha+R\cos\varphi+Ri\sin\varphi\right)}\right|
+	= e^{t\left(\alpha + R\cos\varphi\right)}
+.\]
+Подставим это в интеграл:
+\[
+	\varepsilon \int_{C_R} \left|e^{st}\right| |ds|
+	= \varepsilon \int_{\frac{\pi}{2}}^{\frac{3\pi}{2}} e^{\alpha t + R t \cos \varphi} \left|d\left(Re^{i\varphi}\right)\right|
+\]
+И упростим его:
+\begin{multline*}
+	\varepsilon \int_{\frac{\pi}{2}}^{\frac{3\pi}{2}} e^{\alpha t + R t \cos \varphi} \left|d\left(Re^{i\varphi}\right)\right|
+	= \varepsilon \int_{\frac{\pi}{2}}^{\frac{3\pi}{2}} \left|e^{\alpha t + R t \cos \varphi} R i e^{i\varphi} \right| d\varphi
+	= R\varepsilon e^{\alpha t} \int_{\frac{\pi}{2}}^{\frac{3\pi}{2}} e^{R t \cos\varphi} d\varphi
+	\\= R\varepsilon e^{\alpha t} \int_{0}^{\pi} e^{R t \cos \left(\varphi + \frac{\pi}{2}\right)} d\varphi
+	= R\varepsilon e^{\alpha t} \int_{0}^{\pi} e^{-R t \sin\varphi} d\varphi
+	= 2R\varepsilon e^{\alpha t} \int_{0}^{\frac{\pi}{2}} e^{-R t \sin\varphi} d\varphi
+.\end{multline*}
+На отрезке $[0, \frac{\pi}{2}]$ выполняется: $\sin\varphi \ge \frac{2}{\pi} \varphi$.
+А значит,
+\[
+	2R\varepsilon e^{\alpha t} \int_{0}^{\frac{\pi}{2}} e^{-R t \sin\varphi} d\varphi
+	\le 2R\varepsilon e^{\alpha t} \int_{0}^{\frac{\pi}{2}} e^{-R t \frac{2}{\pi}\varphi} d\varphi = \\
+.\]
+Этот интеграл уже легко вычисляется:
+\[
+	2R\varepsilon e^{\alpha t} \int_{0}^{\frac{\pi}{2}} e^{-R t \frac{2}{\pi}\varphi} d\varphi
+	= 2R\varepsilon e^{\alpha t} \left.\left( \frac{1}{-\frac{2Rt}{\pi}}e^{- \frac{2 R t \varphi}{\pi}} \right) \right|_0^{\frac{\pi}{2}} 
+        = \frac{\pi\varepsilon}{t} e^{\alpha t} \left(1 - e^{- R t} \right)
+.\]
+Получившаяся функции стремится к нулю при $R \to \infty$.
 Отсюда интеграл по дуге стремится к $0$.
 \end{proof}
 \end{document}
