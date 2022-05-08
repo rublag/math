@@ -1,0 +1,57 @@
+\documentclass[../../paper.tex]{subfiles}
+\graphicspath{{\subfix{../figs/}}}
+\begin{document}
+
+\subsection{Нахождение $L^{-1}_u [\frac{1}{u^k} r_{m,n}(u)](t)$}
+Выше мы ввели
+\[
+    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t)
+.\]
+Подставим обратно $r_{m,n}(u)$:
+\[
+    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) =
+%
+    L^{-1}_u \left[ \frac{1}{u^k} \frac{2}{\sqrt{3} \pi^{1/4} } 
+    \exp \left( -\frac{1}{2} \left( \frac{1}{2^{m+1}u} - n \right)^2  \right)
+    \right](t)
+.\]
+Раскроем квадрат под экспонентой:
+\begin{multline*}
+    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t)
+=\\=%
+    L^{-1}_u \left[ \frac{1}{u^k} \frac{2}{\sqrt{3} \pi^{1/4} } 
+    \exp \left( -\frac{1}{2}
+    \left(\left( n^2 \right) - \frac{1}{u} \left(\frac{n}{2^m}\right) + \frac{1}{u^2} \left(\frac{1}{4^{m+1}}\right)\right)
+    \right)
+    \right](t)
+.\end{multline*}
+Сгруппируем $2^{m+1}u$:
+\begin{multline*}
+    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t)
+=\\=%
+    L^{-1}_u \left[ \frac{2^{k(m+1)}}{\left(2^{m+1}u\right)^k} \frac{2}{\sqrt{3} \pi^{1/4} } 
+    \exp \left( -\frac{n^2}{2} + \frac{n}{2^{m+1}u} - \frac{1}{2 \left( 2^{m+1}u \right)^2 }
+    \right)
+    \right](t)
+.\end{multline*}
+Вынесем множители, не зависящие от $u$, за $L^{-1}_u$:
+\begin{multline*}
+    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t)
+=\\=
+    e^{-\frac{n^2}{2}} 2^{k(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    L^{-1}_u \left[ \frac{1}{\left(2^{m+1}u\right)^k}
+    \exp \left(\frac{n}{2^{m+1}u} - \frac{1}{2 \left( 2^{m+1}u \right)^2 }
+    \right)
+    \right](t)
+.\end{multline*}
+Используя лемму \ref{laplace-var-change} о замене переменной в обратном преобразовании Лапласа, делаем замену $s=2^{m+1}u$:
+\[
+    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) =
+%
+    e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
+    L^{-1}_s \left[ \frac{1}{s^k}
+    \exp \left(\frac{n}{s} - \frac{1}{2 s^2 }
+    \right)
+    \right] \left( \frac{t}{2^{m+1}} \right)
+.\]
+\end{document}

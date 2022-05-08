@@ -66,10 +66,55 @@
 .\]
 %
 Выразим $g_{m,n}(z)$:
-\[
+\begin{equation}\label{eq:gmn-laplace}
     g_{m,n}(z)
     = \frac{1}{z^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (z)
+.\end{equation}
+
+Итак, нам нужно вычислить:
+\[
+    L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t).
+\]
+
+Подставим вместо $\psi$ формулу нашего вейвлета:
+\begin{multline*}
+    L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t) =
+\\%
+    L^{-1}_u \left[ \frac{1}{u^k} \frac{2}{\sqrt{3} \pi^{1/4} } 
+    \left( 1 - \left( \frac{1}{2^{m+1} u} - n \right)^2 \right) 
+    \exp \left( -\frac{1}{2} \left( \frac{1}{2^{m+1}u} - n \right)^2  \right)
+    \right](t).
+\end{multline*}
+
+Введем обозначение:
+\[
+    r_{m,n}(u) = \frac{2}{\sqrt{3} \pi^{1/4}} \exp \left( -\frac{1}{2} \left( \frac{1}{2^{m+1}u} - n \right)  \right) 
 .\]
 
-Таким образом мы получили выражение для $g_{m,n}(z)$. Далее мы выразим его через ряды, используя формулу Меллина и основную теорему о вычетах.
+И сразу воспользуемся им:
+\[
+	L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t)
+	= L^{-1}_u \left[ \left( 1 - \left( \frac{1}{2^{m+1} u} - n \right)^2 \right) r_{m,n}(u) \right](t).
+\]
+
+Распишем множитель перед экспонентой:
+\begin{multline*}
+    1 - \left( \frac{1}{2^{m+1} u } - n \right)^2 =
+    1 - \left( \frac{1}{2^{2(m+1)} u^2} - 2 \frac{1}{2^{m+1} u } n + n^2 \right) =
+\\=%
+    \left( 1 - n^2 \right) + \frac{1}{u} \left(\frac{n}{2^m}\right) - \frac{1}{u^2} \left(\frac{1}{4^{m+1}}\right)
+.\end{multline*}
+
+
+Таким образом,
+\begin{multline}\label{eq:invlap_gen}
+    L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t)
+=\\=
+    \left( 1 - n^2 \right)  L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) +
+    \left( \frac{n}{2^m} \right)  L^{-1}_u \left[ \frac{1}{u^{k+1}} r_{m,n}(u) \right](t)
+-\\-
+    \left( \frac{1}{4^{m+1}} \right)  L^{-1}_u \left[ \frac{1}{u^{k+2}} r_{m,n}(u) \right](t)
+.\end{multline}
+
+Отсюда видно, что достаточно найти $L^{-1}_u [\frac{1}{u^k} r_{m,n}(u)](t)$ для каждого $k$.
 \end{document}
