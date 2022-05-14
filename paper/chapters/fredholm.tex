@@ -1,71 +1,147 @@
 \documentclass[../paper.tex]{subfiles}
 \begin{document}
-\section{Альтернативный подход к задаче}
-Вспомним наше изначальное интегральное уравнение:
+\section{Уравнение Фредгольма}
+Выпишем еще раз интегральное уравнение \ref{eq:int-eq}:
 \[
-    \psi_{m,n}(x) = \int_{0}^{\infty} g(xy) f_Y(y) dy  
+	\psi_{m,n}(x) = \int_{0}^{\infty} g(xy) f_Y(y) dy  
 .\]
 
-Преобразуем интеграл, чтобы интегрирование было по $xy$:
+Введем замену $z = xy$:
 \[
-    \psi_{m,n}(x) = \int_{0}^{\infty}  g(xy) f_Y(\frac{xy}{x}) d\frac{xy}{x}
-    = \int_{0}^{\infty} \int_{0}^{\infty} g(z) \frac{1}{x} f_Y(\frac{z}{x}) dz  
+	\psi_{m,n}(x) = \int_{0}^{\infty}  g(xy) f_Y\left(\frac{xy}{x}\right) d\frac{xy}{x}
+	= \int_{0}^{\infty} g(z) \frac{1}{x} f_Y\left(\frac{z}{x}\right) dz  
 .\]
 
-Таким образом мы получили интегральное уравнение Фредгольма первого рода:
+Таким образом, мы получили интегральное уравнение Фредгольма первого рода:
 \[
-    \psi_{m,n}(x) = \int_{0}^{\infty} K(x, z) g(z) dz 
+	\psi_{m,n}(x) = \int_{0}^{\infty} K(x, z) g(z) dz 
+,\]
+где
+\[
+	K(x, z) = \frac{1}{x} f_Y \left(\frac{z}{x}\right)
 .\]
 
-Дальше мы будем использовать равномерную сетку $\left[\frac{1}{n_x}, \dots, \frac{l_x n_x}{n_x}\right]$ для $x$, $\left[\frac{1}{n_z}, \dots, \frac{l_z n_z}{n_z}\right]$ для $z$ 
-и дискретизируем наше уравнение. Получаем:
+\subsection{Дискретизация}
+Будем использовать равномерную сетку $\left[\frac{1}{n_x}, \dots, \frac{l_x n_x}{n_x}\right]$ для $x$, $\left[\frac{1}{n_z}, \dots, \frac{l_z n_z}{n_z}\right]$ для $z$.
+Для вычисления интеграла используем метод прямоугольников.
+Дискретизируем функции $K(x,z)$, $g_{m,n}(z)$, $\psi_{m,n}(x)$:
+\begin{align*}
+	K[x,z] 
+	&=
+	\begin{cases}
+		K\left(\frac{k_x n_x}{n_x}, \frac{k_z n_z}{n_z} \right), \text{ если } 
+			z \in \left[\frac{k_z n_z}{n_z}, \frac{(k_z+1)n_z}{n_z}\right),\\
+		0, \text{ иначе.}
+	\end{cases}\\
+	g_{m,n}[z]
+	&=
+	\begin{cases}
+		g\left(\frac{k_z n_z}{n_z}\right), \text{ если } z \in \left[\frac{k_z n_z}{n_z}, \frac{(k_z+1)n_z}{n_z}\right),\\
+		0, \text{ иначе.}
+	\end{cases}\\
+	\psi_{m,n}[x]
+	&=
+	\begin{cases}
+		\psi_{m,n}\left(\frac{k_x n_x}{n_x}\right), \text{ если } x \in \left[\frac{k_x n_x}{n_x}, \frac{(k_x+1)n_x}{n_x}\right),\\
+		0, \text{ иначе.}
+	\end{cases}\\
+\end{align*}
+
+Таким образом,
 \[
-    \psi_{m,n}[x] = \int_{0}^{\infty} K[x,z] g[z] dz = \frac{1}{n_z} \sum_{p=1}^{l_z n_z} g\left(\frac{p}{n_z}\right) K\left[x, \frac{p}{n_z}\right]
+	\int_{0}^{\infty} K[x,z] g[z] dz
+	= \frac{1}{n_z} \sum_{j=1}^{l_z n_z} K\left[x, \frac{j}{n_z}\right] g_{m,n}\left[\frac{j}{n_z}\right] 
 .\]
 
-Таким образом, мы получили систему линейных уравнений. Запишем их в матричном виде:
+Заменяя $\psi_{m,n}(x)$ на дискретизированную версию, получаем систему уравнений:
 \[
-    \bm{\psi}_{m,n} = \frac{1}{n_z} \bm{K} \bm{g}
+	\begin{cases}
+		\psi_{m,n}\left[ \frac{1}{n_x} \right]
+		= \frac{1}{n_z} \sum_{j=1}^{l_z n_z} K\left[\frac{1}{n_x}, \frac{j}{n_z}\right] g_{m,n}\left[\frac{j}{n_z}\right],\\
+		\dots\\
+		\psi_{m,n}\left[ \frac{l_x n_x}{n_x} \right]
+		= \frac{1}{n_z} \sum_{j=1}^{l_z n_z} K\left[\frac{l_x n_x}{n_x}, \frac{j}{n_z}\right] g_{m,n}\left[\frac{j}{n_z}\right].\\
+	\end{cases}
+\]
+
+Построим матрицу $\bm{K}$ и векторы $\bm{g}$, $\bm{\psi}_{m,n}$:
+\begin{align*}
+	&\left(\bm{K}\right)_{i,j}    = K\left[\frac{i}{n_x}, \frac{j}{n_z}\right],\\
+	&\left(\bm{g}_{m,n}\right)_j      = g_{m,n}\left[\frac{j}{n_z}\right],\\
+	&\left(\bm{\psi}_{m,n}\right)_i = \psi\left[\frac{i}{n_x}\right].
+\end{align*}
+
+Запишем систему уравнений в матричном виде:
+\[
+	\bm{\psi}_{m,n} = \frac{1}{n_z} \bm{K} \bm{g}_{m,n}
 .\]
 
-Увеличим матрицу K, чтобы добавить регуляризацию.
+\subsection{МНК-оптимизация с $l_2$--регуляризацией}
+\begin{Def}
+	Пусть $\bm{K}$ --- матрица, $\bm{f}$ --- вектор.
+	Рассмотрим уравнение:
+	\[
+		\bm{f} = \bm{K}\bm{g}
+	,\] где $\bm{g}$ неизветно.
+
+	Пусть $\alpha > 0$ --- некоторое число, называемое параметром регуляризации.
+	Тогда МНК-оптимизация с $l_2$--регуляризацией есть
+	\[
+		\bm{g}_{*} = \argmin_g \left( \| \bm{K}\bm{g} - \bm{f} \|^2 + \alpha^2 \|\bm{g}\|^2 \right)
+	.\]
+\end{Def}
+
+Построим матрицу $\bm{\tilde K}$, увеличив матрицу $\bm{K}$, чтобы добавить регуляризацию:
 \[
-    \bm{\tilde K} = 
-    \begin{pmatrix}
-        \bm{K} \\
-        \alpha \bm{E}
-    \end{pmatrix}
+	\bm{\tilde K} = 
+	\begin{pmatrix}
+	    \bm{K} \\
+	    \alpha \bm{E}
+	\end{pmatrix}
 .\]
 
 И соответствующий $\bm{\tilde f}$:
 \[
-    \bm{\tilde f} = 
-    \begin{pmatrix}
-        \bm{f} \\
-        \bm{0}
-    \end{pmatrix}
+	\bm{\tilde f} = 
+	\begin{pmatrix}
+	    \bm{f} \\
+	    \bm{0}
+	\end{pmatrix}
 .\]
 
 И будем использовать МНК-оптимизацию. Получаем:
 \[
-    \bm{g_*} = \argmin_{\bm{g}} \| \bm{\tilde K} \bm{g} - \bm{f} \|
+	\bm{g}_{m,n}^* = \argmin_{\bm{g}} \| \bm{\tilde K} \bm{g} - \bm{f} \|
 .\]
+
+Покажем, что это эквивалентно определению МНК-оптимизации с $l_2$--регуляризацией.
+В силу неотрицательности нормы и монотонности функции $x^2$, выполняется:
+\[
+	\bm{g}_{m,n}^* = \argmin_{\bm{g}} \| \bm{\tilde K} \bm{g} - \bm{\tilde f} \|
+	= \argmin_{\bm{g}} \| \bm{\tilde K} \bm{g} - \bm{\tilde f} \|^2
+\]
+Заметим, что в данном случае квадрат нормы есть сумма квадратов строк векторов. Поэтому выполняется:
+\[
+	\bm{g}_{m,n}^* 
+	= \argmin_{\bm{g}} \left(\| \bm{K} \bm{g} - \bm{f} \|^2 + \| \alpha \bm{E} \bm{g} - \bm{0} \|^2\right)
+	= \argmin_{\bm{g}} \left(\| \bm{K} \bm{g} - \bm{f} \|^2 + \alpha^2 \| \bm{g} \|^2\right)
+\]
 %
 \subsection{Градиентный спуск}
 Вместо процедур для решения МНК-задачи мы можем использовать метод градиентного
 спуска. Будем использовать матричное представление
 \[
-  \bm{\psi}_{m,n} = \frac{1}{n_z} \bm{K} \bm{g}
+	\bm{\psi}_{m,n} = \frac{1}{n_z} \bm{K} \bm{g}_{m,n}
 .\]
 
-Тогда можно ввести функцию потери $L(\bm{\psi_{m,n}}, \bm{\hat{\psi}_{m,n}})$,
-где $\bm{\hat{\psi}_{m,n}} = \bm{K} \bm{\hat{g}_{m,n}}$, а $\bm{\hat{g}_{m,n}}$ ---
-оценка для $\bm{g_{m,n}}$.
+Тогда можно ввести функцию потери $L(\bm{\psi}_{m,n}, \bm{\hat{\psi}}_{m,n})$,
+где $\bm{\hat{\psi}}_{m,n} = \bm{K} \bm{\hat{g}}_{m,n}$, а $\bm{\hat{g}}_{m,n}$ ---
+оценка для $\bm{g}_{m,n}$.
 
 В частности, будем рассматривать следующие функции потерь:
 \begin{itemize}
-\item $l1$-потеря: $L(\bm{x}, \bm{y}) = \| x - y \|_1$;
-\item $l2$-потеря: $L(\bm{x}, \bm{y}) = \| x - y \|_2$;
+\item $l_1$--потеря: $L(\bm{x}, \bm{y}) = \| x - y \|_1$;
+\item $l_2$--потеря: $L(\bm{x}, \bm{y}) = \| x - y \|_2$;
 \item функция потери Хьюбера:
   \[
     L(x, y) =
@@ -75,14 +151,33 @@
     \end{cases}.
   \]
   \[
-    L(\bm{x}, \bm{y}) = \frac{1}{n} \sum_{i=1}^k L(x_i, y_i)
+    L(\bm{x}, \bm{y}) = \frac{1}{k} \sum_{i=1}^k L(x_i, y_i)
   \]
 \end{itemize}
 
-Для каждой из них будем использовать $L_1$- или $L_2$-регуляризацию:
+Для каждой из них будем использовать $l_1$- или $l_2$-регуляризацию. Для $l_1$--регуляризации:
 \[
-  \tilde{L}(\bm{\psi_{m,n}}, \bm{\hat{\psi}_{m,n}}) = L(\bm{\psi_{m,n}}, \bm{\hat{\psi}_{m,n}}) + \| \bm{g_{m,n}} - \bm{\hat{g}_{m,n}} \|
-\]
+	\tilde{L}(\bm{\psi}_{m,n}, \bm{\hat{\psi}}_{m,n}) = L(\bm{\psi}_{m,n}, \bm{\hat{\psi}}_{m,n}) + \alpha \| \bm{g}_{m,n} - \bm{\hat{g}}_{m,n} \|_1
+.\]
+Для $l_2$--регуляризации:
+\[
+	\tilde{L}(\bm{\psi}_{m,n}, \bm{\hat{\psi}}_{m,n}) = L(\bm{\psi}_{m,n}, \bm{\hat{\psi}}_{m,n}) + \alpha^2 \| \bm{g}_{m,n} - \bm{\hat{g}}_{m,n} \|_2^2
+.\]
+
+Алгоритм оптимизации методом градиентного спуска с параметром $\beta$ стандартен:
+\begin{enumerate}
+	\item Берем произвольный начальный вектор $\bm{g}_{m,n}^0$.
+	\item Вычисляем $\bm{\psi}_{m,n}^0 = \bm{K}\bm{g}_{m,n}^0$.
+	\item Вычисляем $L^0 = \tilde{L}(\bm{\psi}_{m,n}, \bm{\psi}_{m,n}^0)$
+	\item Считая компоненты $g_1^0, \dots, g_k^0$ вектора $\bm{g}_{m,n}^0$ переменными, 
+		а $L^0 = L^0(a_1^0, \dots, a_k^0)$ функцией от компонент вектора $\bm{g}_{m,n}^0$, вычисляем частные производные $b_i$:
+		\[
+			b_i^0 = \frac{\partial L^0(a_1^0, \dots, a_k^0)}{\partial a_i}
+		.\]
+	\item Берем $\bm{g}_{m,n}^1 = (a_1^0 - \beta b_0^0, \dots, a_k^0 - \beta b_k^0)$.
+	\item Повторяем шаги 1 --- 5, пока либо $L$ не станет меньше некоторого заранее заданного числа,
+		либо количество повторений превысит некоторое заранее заданное число
+\end{enumerate}
 
 \subsection{Итеративные методы}
 В статье \cite{fredholm-integrals} рассматриваются итеративные методы решения задачи Фредгольма
@@ -90,49 +185,31 @@
 
 В приложении к задаче аддитивный метод использует следующие итерации:
 \[
-  g_{m,n;k}(z) = g_{m,n;k-1}(z) = \int_0^\infty K(x, z) (\psi_{m,n;k}(x) - \psi_{m,n}(x)) dx
+	g_{m,n;k}(z) = g_{m,n;k-1}(z) + \int_0^\infty K(x, z) (\psi_{m,n}(x) - \psi_{m,n;k-1}(x)) dx
 ,\]
-\[
-  \psi_{m,n;k}(x) = \int_0^\infty K(x, z) g_{m,n;k}(z) dz
-.\]
-
-Для мультипликативного метода используются такие итерации:
-\[
-  g_{m,n;k}(z) = \frac{g_{m,n;k-1}(z)}{\int_{0}^\infty K(x, z) dx} \int_{0}^\infty \frac{K(x, z) \psi_{m,n}(x)}{\psi_{m,n;k}(x)} dx
-,\]
-\[
-  \psi_{m,n;k}(x) = \int_0^\infty K(x, z) g_{m,n;k}(z) dz
-.\]
-
-Так как $\psi$ и $g$ могут принимать отрицательные значения, производится
-следующее преобразование: выбирается параметр $t$, $\psi_{m,n}$ заменяется
-на $\tilde{\psi}_{m,n} = \psi_{m,n} + t$, $f_{m,n;0}$ заменятся на
-$\tilde{f}_{m,n;0} = f_{m,n;0} + t$.
-%
-\subsection{Поправка для оценок}
-Будем также использовать поправку, предложенную в статье \cite{correction-of-density-estimation}
-В ней рассматриваются два случая: когда интеграл
-\[
-  \int \max(\hat{f}(x), 0) dx
-\]
-больше 1, и когда меньше единицы.
-
-В первом случае оценка $\hat{f}$ заменяется на $\tilde{f}(x) = \max(0, \hat{f}(x) - \xi)$,
-где $\xi$ выбирается так, чтобы выполнялось
-\[
-  \int \tilde{f}(x) dx = 1
-.\]
-
-Во втором случае используется оценка
-\[
-  \tilde{f}(x) = \tilde{f}(x; M) =
-  \begin{cases}
-    \max(0, \hat{f}(x)) + \eta_M \text{, для $|x| \leqslant M$,} \\
-    \max(0, \hat{f}(x)) \text{, для $|x| > M$,}
-  \end{cases}
-\]
 где
 \[
-  \eta_M = \frac{1}{2M} \left( 1 - \int \max(0, \hat{f}(x)) dx \right)
+	\psi_{m,n;k}(x) = \int_0^\infty K(x, z) g_{m,n;k}(z) dz
 .\]
+
+Для мультипликативного метода используются следующие итерации:
+\[
+	g_{m,n;k}(z) = \frac{g_{m,n;k-1}(z)}{\int_{0}^\infty K(x, z) dx} \int_{0}^\infty \frac{K(x, z) \psi_{m,n;k-1}(x)}{\psi_{m,n;k}(x)} dx
+,\]
+\[
+	\psi_{m,n;k}(x) = \int_0^\infty K(x, z) g_{m,n;k}(z) dz
+.\]
+
+Этот метод работает только для неотрицательных $\psi_{m,n}(x)$ и $g_{m,n}(z)$.
+В случае, когда эти функции могут принимать отрицательные значения,
+мы фиксируем число $t$ такое, что $\psi_{m,n}(x) + t \ge 0$ и $g_{m,n}(z) + t \ge 0$,
+и решаем следующее эквивалентное уравнение:
+\[
+	\tilde{\psi}_{m,n}(x) = \int_0^\infty K(x,z) \tilde{g}_{m,n}(z) dz
+,\]
+где
+\begin{align*}
+	\tilde{g}_{m,n}(z)    &= g_{m,n}(z) + t,\\
+	\tilde{\psi}_{m,n}(x) &= \psi_{m,n}(x) + t \int_0^\infty K(x,z) dz.
+\end{align*}
 \end{document}

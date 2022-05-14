@@ -1,0 +1,38 @@
+\documentclass[../paper.tex]{subfiles}
+\begin{document}
+\section{Поправка для оценок}
+Оценка, полученная нашим методом не всегда является функцией распределения.
+Поэтому будем использовать поправку, предложенную в статье \cite{correction-of-density-estimation}
+В ней рассматриваются два случая. Пусть $\hat{f}_X$ --- оценка функции плотности $f_X$.
+
+В случае, когда выполняется:
+\[
+	\int_0^\infty \max(\hat{f}_X(x), 0) dx > 1
+,\]
+исправленная оценка $\tilde{f}_X(x)$ определяется как:
+\[
+	\tilde{f}_X(x) = \max(0, \hat{f}_X(x) - \xi),
+\]
+где $\xi$ выбирается так, чтобы выполнялось
+\[
+	\int_0^\infty \tilde{f}_X(x) dx = 1
+.\]
+
+В случае, когда выполняется:
+\[
+	\int_0^\infty \max(\hat{f}_X(x), 0) dx > 1
+,\]
+исправленная оценка $\tilde{f}_X(x)$ определяется следующим образом. Фиксируем параметр $M > 0$ и положим
+\[
+	\tilde{f}_X(x)
+	= \tilde{f}_X(x; M) =
+	\begin{cases}
+		\max(0, \hat{f}_X(x)) + \eta_M \text{, для $|x| \leqslant M$,} \\
+		\max(0, \hat{f}_X(x)) \text{, для $|x| > M$,}
+	\end{cases}
+\]
+где
+\[
+  \eta_M = \frac{1}{2M} \left( 1 - \int \max(0, \hat{f}_X(x)) dx \right)
+.\]
+\end{document}

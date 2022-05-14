@@ -31,50 +31,54 @@
 Для численного вычисления интеграла. Мы использовали шаг $0{,}1$ и $\alpha = 0{,}1$. И использовали $m=\{-5, \dots, 5\}$, $n=\{-5, \dots, 5\}$.
 
 \begin{figure}[h]
-    \caption{$X \sim \mathcal{N}(0, 1)$}
-    \centering
-    \includegraphics[width=\textwidth]{norm}
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{norm}
+		\caption{$X \sim \mathcal{N}(0, 1)$}
+	\end{minipage}\hfill
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{exp}
+		\caption{$X \sim \exp(1)$}
+	\end{minipage}\hfill
 \end{figure}
 
 \begin{figure}[h]
-    \caption{$X \sim \exp(1)$}
-    \centering
-    \includegraphics[width=\textwidth]{exp}
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{chisq}
+		\caption{$X \sim \chi^2_5$}
+	\end{minipage}\hfill
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{comp-loss}
+		\caption{Сравнение функций ошибок для метода градиентного спуска}
+	\end{minipage}\hfill
 \end{figure}
 
 \begin{figure}[h]
-    \caption{$X \sim \chi^2_5$}
-    \centering
-    \includegraphics[width=\textwidth]{chisq}
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{comp-method}
+		\caption{Сравнение методов градиентного спуска, итеративного и МНК-оценки}
+	\end{minipage}\hfill
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{est-lse}
+		\caption{МНК-оценка для смеси нормальных распределений}
+	\end{minipage}\hfill
 \end{figure}
 
 \begin{figure}[h]
-  \caption{Сравнение функций ошибок для метода градиентного спуска}
-  \centering
-  \includegraphics[width=\textwidth]{comp-loss}
-\end{figure}
-
-\begin{figure}[h]
-  \caption{Сравнение методов градиентного спуска, итеративного и МНК-оценки}
-  \centering
-  \includegraphics[width=\textwidth]{comp-method}
-\end{figure}
-
-\begin{figure}[h]
-  \caption{МНК-оценка для смеси нормальных распределений}
-  \centering
-  \includegraphics[width=\textwidth]{est-lse}
-\end{figure}
-
-\begin{figure}[h]
-  \caption{Оценка методом градиентного спуска для смеси нормальных распределений}
-  \centering
-  \includegraphics[width=\textwidth]{est-l2}
-\end{figure}
-
-\begin{figure}[h]
-  \caption{Оценка итеративным методом для смеси нормальных распределений}
-  \centering
-  \includegraphics[width=\textwidth]{est-it}
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{est-l2}
+		\caption{Оценка методом градиентного спуска для смеси нормальных распределений}
+	\end{minipage}\hfill
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{est-it}
+		\caption{Оценка итеративным методом для смеси нормальных распределений}
+	\end{minipage}\hfill
 \end{figure}
 \end{document}
