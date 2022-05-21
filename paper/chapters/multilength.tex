@@ -1,6 +1,6 @@
 \documentclass[../paper.tex]{subfiles}
 \begin{document}
-\section{Обобщение на случай разных длин траекторий}
+\section{Обобщение на случай разных длин траекторий}\label{multilength}
 Мы строили функции вида:
 \[
 	\PE g_{m,n}(XY) = \PE \psi_{m,n}(X) = c_{m,n}
@@ -27,9 +27,13 @@
 \[
 	f_X(x)
 	= \sum_{m,n} \PE \psi_{m,n}(X) \psi_{m,n}(x)
-	= \sum_{m,n} \PE g_{m,n}(XY) \psi_{m,n}(x)
 .\]
 Представим математическое ожидание в виде математического ожидания условного математического ожидания при условии длины траектории:
+\[
+	f_X(x) 
+	= \sum_{m,n} \PE_k \left(\PE \left(\psi_{m,n}(X) \mid k \right) \right ) \psi_{m,n}(x).
+\]
+Для каждой длины траектории мы построили функции $g_{m,n,k}(XY)$. Заменим $\psi_{m,n}(X)$ на $g_{m,n,k}(XY)$:
 \[
 	f_X(x) 
 	= \sum_{m,n} \PE_k \left(\PE \left(g_{m,n}(XY) \mid k \right) \right ) \psi_{m,n}(x).

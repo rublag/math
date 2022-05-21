@@ -2,70 +2,70 @@
 \begin{document}
 \section{Эксперименты}
 %
-Для аналитического способа.
+Вычисление значений функции $g_{m,n}(z)$ аналитическим способом, рассмотренным в разделе \ref{analytic-g} требует использования длинной арифметики
+и вычисления большого количества членов ряда. Это приводит к очень низкой скорости построения оценки. 
 
-\begin{tabular}{ l l l l }
-\hline
-    Функция        & Способ вычисления                              & Машинная точность                     & Значение                  \\ 
-                   &                                                & (размер мантиссы),                    &                           \\
-\hline%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    $g_{0,0}(1)$   & численно, интеграл,                            & 100 десятичных знаков                 & $ 0.864$                  \\
-	           & контур $[1-100i, 1+100i]$                      &                                       &                           \\
+Для построения оценок численными методами мы использовали следующие параметры
+\begin{enumerate}
+	\item Равномерная сетка по $x$, состоящая из 1000 точек, минимальная точка: $0{,}05$, максимальная точка: $100$.
+	\item Равномерная сетка по $z$, состоящая из 10~000 точек, минимальная точка: $0{,}05$, максимальная точка: $1000$.
+	\item Параметр $m$ от $-5$ до $5$ включительно.
+	\item Параметр $n$ от $-5$ до $5$ включительно.
+	\item Параметр регуляризации $\alpha$: $0{,}1$.
+\end{enumerate}.
 
-	           & численно, ряд                                  & 256 двоичных знаков                   & $ 0.864$                  \\
+Опишем графики, приведенные ниже:
+\begin{enumerate}
+	\item На графике \ref{comp-loss} показано сравнение различных функций ошибок для метода градиентного спуска.
+		А именно, изображено $\int_0^\infty K(x,z)g_{0,-3}(z)dz$, где $g_{0,-3}$ получено с использованием различных функций ошибок.
+		Также изображена функция $\psi_{0,-3}$.
+	\item На графике \ref{comp-method} изображено сравнение различных методов решения уравнения и приведена целевая функция.
+	\item На графиках \ref{norm}, \ref{chisq} изображена оценка для некоторых распределений $X$, полученная методом МНК--оптимизации с $l_2$--регуляризацией.
+	\item На графиках \ref{est-lse}, \ref{est-it}, \ref{est-l2} изображены оценки, полученные разными методами, для смеси двух нормальных распределений: $\mathcal{N}(1, 1/4)$ и $\mathcal{N}(3, 1/2)$. 
+\end{enumerate}
 
-    $g_{0,0}(10)$  & численно, интеграл                             & 100 десятичных знаков                 & $ 0.591$                  \\
-                   & контур $[1-100i, 1+100i]$                      &                                       &                           \\
-
-                   & численно, ряд                                  & 256 двоичных знаков                   & $ 0.591$                  \\
-
-    $g_{0,0}(100)$ & численно, интеграл                             & 100 десятичных знаков                 & $-2 \times 10^{19}$       \\
-	           & контур $[1-10i, 1+10i]$                        &                                       &                           \\
-		   
-                   & численно, ряд                                  & 256 двоичных знаков                   & $-0.440$                  \\
-\hline
-\end{tabular}
-
-\bigskip
-
-Для численного вычисления интеграла. Мы использовали шаг $0{,}1$ и $\alpha = 0{,}1$. И использовали $m=\{-5, \dots, 5\}$, $n=\{-5, \dots, 5\}$.
+\begin{figure}[h]
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{comp-loss}
+		\caption{Сравнение функций ошибок для метода градиентного спуска}
+		\label{comp-loss}
+	\end{minipage}\hfill
+	\begin{minipage}{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{comp-method}
+		\caption{Сравнение методов градиентного спуска, итеративного и МНК-оценки}
+		\label{comp-method}
+	\end{minipage}\hfill
+\end{figure}
 
 \begin{figure}[h]
 	\begin{minipage}{0.48\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{norm}
 		\caption{$X \sim \mathcal{N}(0, 1)$}
+		\label{norm}
 	\end{minipage}\hfill
-	\begin{minipage}{0.48\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{exp}
-		\caption{$X \sim \exp(1)$}
-	\end{minipage}\hfill
-\end{figure}
-
-\begin{figure}[h]
 	\begin{minipage}{0.48\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{chisq}
 		\caption{$X \sim \chi^2_5$}
-	\end{minipage}\hfill
-	\begin{minipage}{0.48\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{comp-loss}
-		\caption{Сравнение функций ошибок для метода градиентного спуска}
+		\label{chisq}
 	\end{minipage}\hfill
 \end{figure}
 
 \begin{figure}[h]
 	\begin{minipage}{0.48\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{comp-method}
-		\caption{Сравнение методов градиентного спуска, итеративного и МНК-оценки}
+		\includegraphics[width=\textwidth]{est-lse}
+		\caption{МНК-оценка для смеси нормальных распределений}
+		\label{est-lse}
 	\end{minipage}\hfill
 	\begin{minipage}{0.48\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{est-lse}
-		\caption{МНК-оценка для смеси нормальных распределений}
+		\includegraphics[width=\textwidth]{est-it}
+		\caption{Оценка итеративным методом для смеси нормальных распределений}
+		\label{est-it}
 	\end{minipage}\hfill
 \end{figure}
 
@@ -74,11 +74,7 @@
 		\centering
 		\includegraphics[width=\textwidth]{est-l2}
 		\caption{Оценка методом градиентного спуска для смеси нормальных распределений}
-	\end{minipage}\hfill
-	\begin{minipage}{0.48\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{est-it}
-		\caption{Оценка итеративным методом для смеси нормальных распределений}
+		\label{est-l2}
 	\end{minipage}\hfill
 \end{figure}
 \end{document}
