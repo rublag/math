@@ -1,26 +1,22 @@
 \documentclass[../paper.tex]{subfiles}
 \begin{document}
 \subsection{Сведение задачи к вычислению обратного преобразования Лапласа}
-Рассмотрим только случай $X_i > \delta > 0$.
+Отметим, что естественно полагать отделимость коэффициента дифракции от нуля.
 
-Мы будем использовать вейвлет «Mexican hat», потому что он прост и непрерывен. Его формула:
+Мы будем использовать вейвлет «Mexican hat», он прост и непрерывен. Напомним, что материнский вейвлет здесь задается выражением:
 \[
     \psi(t) = \frac{2}{\sqrt{3} \pi^{1 / 4}} (1-t^2)e^{-t^2 / 2}
 .\]
-
-Определим элементы фрейма: \\
+Определим элементы фрейма:
 \[
     \psi_{m,n}(t) = 
     \frac{1}{\sqrt{2^m}} \psi\left( \frac{t}{2^m}-n \right) =
     \frac{1}{\sqrt{2^m} }\frac{2}{\sqrt{3} \pi^{1 / 4}} \left(1-\left( \frac{t}{2^m} - n \right)^2 \right) e^{-\left( \frac{t}{2^m} - n \right)^2 / 2}
 .\]
-
-
-Напишем плотность $Y_i$:
+Выпишем плотность распределения $Y_i$:
 \[
 	f_Y(y) = \frac{1}{2^k} \frac{1}{\Gamma(k)} y^{k-1} e^{-y / 2}
 .\]
-
 Раскроем $\PE g_{m,n}(xY)$:
 \[
 	\PE g_{m,n}(xY)
@@ -40,14 +36,14 @@
 	= \left( \frac{1}{2x} \right)^k \frac{1}{\Gamma(k)} L_z \left[g_{m,n}(z) z^{k-1}\right] \left( \frac{1}{2x} \right)
 .\]
 %
-Получаем функциональное уравнение:
+Получаем функциональное уравнение
 \[
 	\left( \frac{1}{2x} \right)^k \frac{1}{\Gamma(k)} L_z \left[g_{m,n}(z) z^{k-1}\right] \left( \frac{1}{2x} \right)
 	= \psi_{m,n}(x)
 	= \left( \frac{1}{\sqrt{2} } \right)^m \psi \left( \frac{x}{2^m} - n \right) 
 \]
 %
-Сделаем замену $u = \frac{1}{2x}$:
+Производя замену $u = 1/(2x)$, получаем:
 \[
     u^k \frac{1}{\Gamma(k)} L_z \left[g_{m,n}(z) z^{k-1}\right] \left( u \right)
     = \left( \frac{1}{\sqrt{2} } \right)^m \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) 
@@ -65,17 +61,15 @@
     = L^{-1}_u \left[ \frac{\Gamma(k)}{u^k} \left( \frac{1}{\sqrt{2} } \right)^m \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (z)
 .\]
 %
-Выразим $g_{m,n}(z)$:
+Отсюда получаем соотношение
 \begin{equation}\label{eq:gmn-laplace}
     g_{m,n}(z)
     = \frac{1}{z^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (z)
 .\end{equation}
-
 Итак, нам нужно вычислить:
 \[
     L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t).
 \]
-
 Подставим вместо $\psi$ формулу нашего вейвлета:
 \begin{multline*}
     L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t) =
@@ -85,19 +79,17 @@
     \exp \left( -\frac{1}{2} \left( \frac{1}{2^{m+1}u} - n \right)^2  \right)
     \right](t).
 \end{multline*}
-
-Введем обозначение:
+Вводя обозначение
 \[
     r_{m,n}(u) = \frac{2}{\sqrt{3} \pi^{1/4}} \exp \left( -\frac{1}{2} \left( \frac{1}{2^{m+1}u} - n \right)  \right) 
-.\]
-
-И сразу воспользуемся им:
+,\]
+получаем:
 \[
 	L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t)
 	= L^{-1}_u \left[ \left( 1 - \left( \frac{1}{2^{m+1} u} - n \right)^2 \right) r_{m,n}(u) \right](t).
 \]
 
-Распишем множитель перед экспонентой:
+При этом
 \begin{multline*}
     1 - \left( \frac{1}{2^{m+1} u } - n \right)^2 =
     1 - \left( \frac{1}{2^{2(m+1)} u^2} - 2 \frac{1}{2^{m+1} u } n + n^2 \right) =

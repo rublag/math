@@ -4,14 +4,14 @@
 Обратное преобразование Лапласа можно найти, используя интеграл Меллина. Этот интеграл использует контур $(\alpha - i\infty, \alpha + i\infty)$.
 Если мы модифицируем лемму Жордана, чтобы она использовала контур в виде левой полуокружности с центром в $\alpha$, то сможем использовать основную теорему о вычетах для вычисления обратного преобразования Лапласа.
 %
-\begin{Lem}[Модифицированная лемма Жордана]
+\begin{Lem}[Модифицированная лемма Жордана]\label{modified-jordan}
 Пусть $\alpha$, $t$, $R_0$ > 0, 
 функция $F(s)$ непрерывна в области 
 \[
 	G = \{s \mid \Re s \le  \alpha \} \cap \{ s \mid |s-\alpha| \ge  R_0 > 0 \}
-\]
-Обозначим $C_R$ --- полуокружность $|z-\alpha| = R$ в области $G$.
-И пусть выполняется:
+.\]
+Обозначим через $C_R$ полуокружность $|z-\alpha| = R$ в области $G$.
+Пусть выполняется соотношение
 \[
 	\lim\limits_{R \to \infty} \sup\limits_{s \in C_R} |F(s)| = 0
 .\]
@@ -29,7 +29,7 @@
 	\caption{контур и область}
 \end{figure}
 
-По условию, 
+По условию
 \[
 	\forall \varepsilon > 0 \ \  \exists R \ \ \forall s \in C_R \quad \left| F(s) \right| = \left| F\left(\alpha + Re^{i\varphi}\right) \right|  < \varepsilon
 ,\] тогда
@@ -44,12 +44,12 @@
 	= \left|e^{t\left(\alpha+R\cos\varphi+Ri\sin\varphi\right)}\right|
 	= e^{t\left(\alpha + R\cos\varphi\right)}
 .\]
-Подставим это в интеграл:
+Подставим полученное представление в интеграл:
 \[
 	\varepsilon \int_{C_R} \left|e^{st}\right| |ds|
 	= \varepsilon \int_{\frac{\pi}{2}}^{\frac{3\pi}{2}} e^{\alpha t + R t \cos \varphi} \left|d\left(Re^{i\varphi}\right)\right|
 \]
-И упростим его:
+Упростим полученное выражение:
 \begin{multline*}
 	\varepsilon \int_{\frac{\pi}{2}}^{\frac{3\pi}{2}} e^{\alpha t + R t \cos \varphi} \left|d\left(Re^{i\varphi}\right)\right|
 	= \varepsilon \int_{\frac{\pi}{2}}^{\frac{3\pi}{2}} \left|e^{\alpha t + R t \cos \varphi} R i e^{i\varphi} \right| d\varphi
@@ -58,13 +58,13 @@
 	= R\varepsilon e^{\alpha t} \int_{0}^{\pi} e^{-R t \sin\varphi} d\varphi
 	= 2R\varepsilon e^{\alpha t} \int_{0}^{\frac{\pi}{2}} e^{-R t \sin\varphi} d\varphi
 .\end{multline*}
-На отрезке $[0, \frac{\pi}{2}]$ выполняется: $\sin\varphi \ge \frac{2}{\pi} \varphi$.
+На отрезке $[0, \frac{\pi}{2}]$ выполняется неравенство $\sin\varphi \ge \frac{2}{\pi} \varphi$.
 А значит,
 \[
 	2R\varepsilon e^{\alpha t} \int_{0}^{\frac{\pi}{2}} e^{-R t \sin\varphi} d\varphi
-	\le 2R\varepsilon e^{\alpha t} \int_{0}^{\frac{\pi}{2}} e^{-R t \frac{2}{\pi}\varphi} d\varphi = \\
+	\le 2R\varepsilon e^{\alpha t} \int_{0}^{\frac{\pi}{2}} e^{-R t \frac{2}{\pi}\varphi} d\varphi
 .\]
-Этот интеграл уже легко вычисляется:
+Полученный интеграл вычисляется напрямую:
 \[
 	2R\varepsilon e^{\alpha t} \int_{0}^{\frac{\pi}{2}} e^{-R t \frac{2}{\pi}\varphi} d\varphi
 	= 2R\varepsilon e^{\alpha t} \left.\left( \frac{1}{-\frac{2Rt}{\pi}}e^{- \frac{2 R t \varphi}{\pi}} \right) \right|_0^{\frac{\pi}{2}} 

@@ -1,6 +1,6 @@
 \documentclass[../paper.tex]{subfiles}
 \begin{document}
-\begin{Lem}[Правильная часть ряда Лорана для $f(s) = e^{as} e^{-1/(2s^2)}$]
+\begin{Lem}
 \label{laurent-2}
 Правильная часть ряда Лорана для функции
 \[
@@ -20,7 +20,7 @@
 		\left( \sum_{m=0}^{\infty} \frac{\left( -1 / \left( 2z^2 \right) \right)^m}{m!}  \right) 
 .\]
 Обе функции аналитичны в $\CC \setminus \{0\}$, поэтому их ряды сходятся абсолютно.
-Находим ряд Лорана для $f(z)$, перемножая по Коши эти два ряда:
+Находим ряд Лорана для $f(z)$, перемножая два рассматриваемых ряда по Коши:
 \[
 	e^{az} e^{-1/(2z^2)}
 	= \sum_{k=-\infty}^{\infty} z^k \sum_{n-2m=k} \chi(n \ge 0) \chi(m \ge 0) \frac{a^n / (-2)^m}{n!\,m!}

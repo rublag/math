@@ -2,12 +2,12 @@
 \graphicspath{{\subfix{../figs/}}}
 \begin{document}
 
-\subsection{Нахождение $L^{-1}_u [\frac{1}{u^k} r_{m,n}(u)](t)$}
+\subsection{Нахождение обратного преобразования Лапласа}
 Выше мы ввели
 \[
     L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t)
 .\]
-Подставим обратно $r_{m,n}(u)$:
+Используя выражение для $r_{m,n}(u)$, получаем:
 \[
     L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) =
 %
@@ -15,25 +15,20 @@
     \exp \left( -\frac{1}{2} \left( \frac{1}{2^{m+1}u} - n \right)^2  \right)
     \right](t)
 .\]
-Раскроем квадрат под экспонентой:
-\begin{multline*}
-    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t)
-=\\=%
-    L^{-1}_u \left[ \frac{1}{u^k} \frac{2}{\sqrt{3} \pi^{1/4} } 
-    \exp \left( -\frac{1}{2}
-    \left(\left( n^2 \right) - \frac{1}{u} \left(\frac{n}{2^m}\right) + \frac{1}{u^2} \left(\frac{1}{4^{m+1}}\right)\right)
-    \right)
-    \right](t)
-.\end{multline*}
-Сгруппируем $2^{m+1}u$:
-\begin{multline*}
-    L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t)
-=\\=%
-    L^{-1}_u \left[ \frac{2^{k(m+1)}}{\left(2^{m+1}u\right)^k} \frac{2}{\sqrt{3} \pi^{1/4} } 
-    \exp \left( -\frac{n^2}{2} + \frac{n}{2^{m+1}u} - \frac{1}{2 \left( 2^{m+1}u \right)^2 }
-    \right)
-    \right](t)
-.\end{multline*}
+Выражение под обратным преобразованием Лапласа представимо в виде
+\[
+	\frac
+	{2^{k (m+1)}}
+	{\left( 2^{m+1} u \right)^k}
+	\frac
+	{2}
+	{\sqrt{3} \pi^{1/4} } 
+	\exp \left(
+		-\frac{n^2}{2} 
+		+ \frac{n}{2^{m+1}u}
+		- \frac{1}{2 \left( 2^{m+1}u \right)^2 }
+	\right)
+.\]
 Вынесем множители, не зависящие от $u$, за $L^{-1}_u$:
 \begin{multline*}
     L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t)

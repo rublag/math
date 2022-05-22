@@ -2,7 +2,7 @@
 \graphicspath{{\subfix{../figs/}}}
 \begin{document}
 \subsection{Вычисление обратного преобразование Лапласа}
-В предыдущем разделе мы выразили:
+В предыдущем разделе было получено соотношение:
 \begin{equation}\label{eq:invlap}
     L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) =
 %
@@ -12,14 +12,14 @@
     \right)
     \right] \left( \frac{t}{2^{m+1}} \right)
 .\end{equation}
-Чтобы вычислить правую часть, найдем теперь
+Чтобы вычислить правую часть, найдем величину
 \begin{equation}\label{eq:invlap_as_int}
     L^{-1}_s \left[ \frac{1}{s^k}
     \exp \left(\frac{n}{s}\right)
     \exp \left(-\frac{1}{2 s^2 }\right)
     \right] \left( \tau \right)
 .\end{equation}
-Воспользуемся формулой Меллина обратного преобразования Лапласа. У данной функции особенность только в нуле, поэтому можно взять любое число $\alpha>0$:
+Воспользуемся формулой Меллина обратного преобразования Лапласа. Данная функция имеет особенность только в нуле, откуда $\alpha$ можеть быть выбрано произвольным положительным числом.
 \[
     L^{-1}_s \left[ \frac{1}{s^k}
     \exp \left(\frac{n}{s}\right)
@@ -28,17 +28,14 @@
 %
     \frac{1}{2\pi i}\int_{\alpha-i\infty}^{\alpha+i\infty} e^{s\tau} \frac{1}{s^k} e^{-1/(2s^2)} e^{n/s} ds
 .\]
-
-
-Берем контур $C$ = $C_1 + C_2$, где $C_1$ --- искомый, а $C_2$ --- дуга окружности (слева от $C_1$ с центром в $(\alpha, 0)$).
-
+Рассмотрим контур $C$ = $C_1 + C_2$, где $C_1$ --- искомый, а $C_2$ --- дуга окружности (слева от $C_1$ с центром в $(\alpha, 0)$).
 \begin{figure}[ht]
 	\centering
 	\input{jordan-lemma-path-figure.tex}
 	\caption{Наглядное изображение контура.}
 \end{figure}
 
-Оценим $F(s) := (1/s^k) e^{-1/(2s^2)} e^{n/s}$ на $C_r$, где $r > 4\alpha$. Для этого оценим каждый из множителей. Сначала $1/s$:
+Оценим $F(s) := (1/s^k) e^{-1/(2s^2)} e^{n/s}$ на $C_r$ при $r > 4\alpha$. Для этого оценим каждый из множителей. Заметим, что
 \begin{multline*}
     \left|\frac{1}{s}\right| = 
     \left|\frac{1}{\alpha+re^{i\phi}}\right| =
@@ -49,7 +46,7 @@
     \frac{1}{r\sqrt{1 + \frac{\cos\phi}{2}}} \le
     \frac{\sqrt{2}}{r} 
 .\end{multline*}
-Теперь оценим $e^{-1/(2s^2)}$ на том же контуре. Известно, что $|e^{z}| = e^{|z|}$
+Теперь оценим $e^{-1/(2s^2)}$ на том же контуре. Известно, что $|e^{z}| \le e^{|z|}$
 \[
     \left|\exp\left(-\frac{1}{2s^2}\right)\right| \le
     \exp\left(\left|-\frac{1}{2s^2}\right|\right) =
@@ -61,28 +58,28 @@
     \exp\left(\left| \frac{n}{s} \right|\right) =
     \exp\left( \frac{|n|\sqrt{2} }{r} \right) 
 .\]
-Объединяем оценки и получаем:
+Объединяя полученные оценки, получаем
 \[
     \left|\frac{1}{s^k} \exp\left(-\frac{1}{2s^2}\right) \exp\left(\frac{n}{s}\right)\right| \le
     \left(\frac{\sqrt{2}}{r}\right)^k \exp\left(\frac{1}{r^2}\right) \exp\left(\frac{|n|\sqrt{2}}{r}\right)
     \xrightarrow[r \to \infty]{} 0
 .\]
 
-А значит, по лемме Жордана $\int\limits_{C_r} e^{s\tau} F(s)ds$ стремится к нулю.
-Поэтому можем использовать основную теорему о вычетах:
+Применяя модифицированную лемму Жордана (\ref{modified-jordan}), получаем, что интеграл $\int\limits_{C_r} e^{s\tau} F(s)ds$ стремится к нулю при $r \to \infty$.
+Следовательно, в силу теоремы Коши о вычетах:
 \[
     \frac{1}{2\pi i}\int_{\alpha-i\infty}^{\alpha+i\infty} e^{s\tau} \frac{1}{s^k} e^{-1/(2s^2)} e^{n/s} ds =
     \frac{1}{2\pi i} 2\pi i \Res_0 \left( e^{s\tau} \frac{1}{s^k} e^{-1/(2s^2)} e^{n/s} ds \right)
 .\]
-У нас возникает два случая: $n=0$ и $n\neq$0
+Здесь возникает два различных случая: $n=0$ и $n\neq$0
 
 \subsubsection{Случай $n = 0$}
-Воспользуемся леммой \ref{laurent-2} о правильной части функции $e^{s\tau} e^{-1/(2s^2)}$. Нам нужен $k-1$-й член ряда Лорана. Получаем:
+Нам нужен $k-1$--й член ряда Лорана функции $e^{s\tau} e^{-1/(2s^2)}$. Воспользуемся леммой \ref{laurent-2} о правильной части этой функции.  Получаем:
 \[
     \frac{1}{2\pi i}\int_{\alpha-i\infty}^{\alpha+i\infty} e^{s\tau} \frac{1}{s^k} e^{-1/(2s^2)} e^{n/s} ds =
     \sum_{j=0}^{\infty} \frac{\tau^{2j+k-1} / (-2)^j}{(2j+k-1)!\,j!}
 .\]
-Таким образом, мы вычислили выражение \ref{eq:invlap_as_int} для $n = 0$:
+Таким образом, мы вычислили выражение (\ref{eq:invlap_as_int}) для $n = 0$:
 \[
     L^{-1}_s \left[ \frac{1}{s^k}
     \exp \left(\frac{n}{s}\right)
@@ -91,7 +88,7 @@
 =
     \sum_{j=0}^{\infty} \frac{\tau^{2j+k-1} / (-2)^j}{(2j+k-1)!\,j!}
 .\]
-Подставим этот ряд в выражение \ref{eq:invlap}, заменяя $\tau$ на $t/2^{m+1}$:
+Подставим этот ряд в выражение (\ref{eq:invlap}), заменяя $\tau$ на $t/2^{m+1}$:
 \begin{multline*}
     L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t)
 =\\=%
@@ -104,8 +101,8 @@
     e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
     \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k-1} / (-2)^j}{(2j+k-1)!\,j!}
 .\end{multline*}
-Наконец, подставим получившееся выражение в формулу~\ref{eq:invlap_gen}:
-\begin{multline}
+Наконец, подставим получившееся выражение в формулу~(\ref{eq:invlap_gen}):
+\begin{multline}\label{local:0:rmn}
     L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t)
 =\\=
     \left( 1 - n^2 \right)  L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) +
@@ -125,7 +122,7 @@
     e^{-\frac{n^2}{2}} 2^{(k+1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
     \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k+1} / (-2)^j}{(2j+k+1)!\,j!}
 .\end{multline}
-Теперь получим выражение для $g(t)$, подставляя только что полученную формулу в выражение~\ref{eq:gmn-laplace}:
+Теперь получим выражение для $g_{m,n}(t)$, подставляя соотношение (\ref{local:0:rmn}) в выражение~(\ref{eq:gmn-laplace}):
 \begin{multline*}
     g_{m,n}(t) = 
     \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t)
@@ -158,12 +155,12 @@
     \right)
 .\]
 \subsubsection{Случай $n \neq 0$}
-Воспользуемся леммой \ref{laurent-3} о правильной части функции $e^{s\tau} e^{-1/(2s^2)} e^{n/s}$. Нам нужен $k-1$-й член ряда Лорана. Получаем:
+Нам нужен $k-1$-й член ряда Лорана функции $e^{s\tau} e^{-1/(2s^2)} e^{n/s}$. Воспользуемся леммой \ref{laurent-3} о правильной части этой функции. Получаем:
 \[
     \frac{1}{2\pi i}\int_{\alpha-i\infty}^{\alpha+i\infty} e^{s\tau} \frac{1}{s^k} e^{-1/{2s^2}} e^{n/s} ds =
     \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\tau^{2j+k-1+i} / (-2)^j}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
 .\]
-Таким образом, мы вычислили выражение \ref{eq:invlap_as_int} для $n \ne 0$:
+Таким образом, мы вычислили выражение (\ref{eq:invlap_as_int}) для $n \ne 0$:
 \[
     L^{-1}_s \left[ \frac{1}{s^k}
     \exp \left(\frac{n}{s}\right)
@@ -172,7 +169,7 @@
 =
     \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\tau^{2j+k-1+i} / (-2)^j}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
 .\]
-Подставим это выражение в выражение \ref{eq:invlap}, заменяя $\tau$ на $t/2^{m+1}$:
+Подставим это выражение в выражение (\ref{eq:invlap}), заменяя $\tau$ на $t/2^{m+1}$:
 \begin{multline*}
     L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t)
 =\\=%
@@ -185,8 +182,8 @@
     e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
     \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k-1+i} / (-2)^j}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
 .\end{multline*}
-Наконец, подставим это в формулу~\ref{eq:invlap_gen}:
-\begin{multline}
+Наконец, подставим результат в формулу~(\ref{eq:invlap_gen}):
+\begin{multline}\label{local:not0:gmn}
     L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t) 
 =\\=
     \left( 1 - n^2 \right)  L^{-1}_u \left[ \frac{1}{u^k} r_{m,n}(u) \right](t) +
@@ -196,34 +193,34 @@
 =\\=
     \left( 1-n^2 \right) 
     e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
-    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k-1+i} / (-2)^j}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k-1+i} (-2)^{-j}}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
 +\\+
     \left( \frac{n}{2^m} \right) 
     e^{-\frac{n^2}{2}} 2^{k(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
-    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k+i} / (-2)^j}{(2j+k+i)!\,j!} \frac{n^i}{i!}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k+i} (-2)^{-j}}{(2j+k+i)!\,j!} \frac{n^i}{i!}
 -\\-
     \left( \frac{1}{4^{m+1}} \right) 
     e^{-\frac{n^2}{2}} 2^{(k+1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
-    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k+1+i} / (-2)^j}{(2j+k+1+i)!\,j!} \frac{n^i}{i!}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k+1+i} (-2)^{-j}}{(2j+k+1+i)!\,j!} \frac{n^i}{i!}
 .\end{multline}
-Теперь получим выражение для $g_{m,n}(t)$, подставляя только что полученную формулу в выражение~\ref{eq:gmn-laplace}
+Теперь получим выражение для $g_{m,n}(t)$, подставляя полученное соотношение (\ref{local:not0:gmn}) в выражение~(\ref{eq:gmn-laplace})
 \begin{multline*}
     g_{m,n}(t) = 
     \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} L^{-1}_u \left[ \frac{1}{u^k} \psi_{m,n} \left( \frac{1}{2^{m+1} u} - n \right) \right] (t)
 =\\=
     \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} \left( 1-n^2 \right) 
     e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
-    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k-1+i} / (-2)^j}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k-1+i} (-2)^{-j}}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
 +\\+
     \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} \left( \frac{n}{2^m} \right) 
     e^{-\frac{n^2}{2}} 2^{k(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
-    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k+i} / (-2)^j}{(2j+k+i)!\,j!} \frac{n^i}{i!}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k+i} (-2)^{-j}}{(2j+k+i)!\,j!} \frac{n^i}{i!}
 -\\-
     \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} \left( \frac{1}{4^{m+1}} \right) 
     e^{-\frac{n^2}{2}} 2^{(k+1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
-    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k+1+i} / (-2)^j}{(2j+k+1+i)!\,j!} \frac{n^i}{i!}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k+1+i} (-2)^{-j}}{(2j+k+1+i)!\,j!} \frac{n^i}{i!}
 .\end{multline*}
-Упростим:
+Упрощая полученное выражение, получим:
 \begin{multline*}
     g_{m,n}(t)
 =
