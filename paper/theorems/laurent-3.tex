@@ -4,20 +4,20 @@
 \label{laurent-3}
 Пусть $k \ge 0$; пусть
 \[
-    f(z) = e^{az} e^{-1/(2z^2)} e^{b/z}
+	f(z) = e^{az} e^{-1/(2z^2)} e^{b/z}
 .\]
 Тогда $k$-й член ряда Лорана для $f$ равен
 \[
-    \sum_{l=0}^{\infty}
-    \sum_{m=0}^{\infty} \frac{a^{2m+k+l} / \left( -2 \right)^m}{(2m+k+l)!\,m!} \\
-    \frac{n^l}{l!}
+	\sum_{l=0}^{\infty}
+	\sum_{m=0}^{\infty} \frac{a^{2m+k+l} (-2)^{-m}}{(2m+k+l)!\,m!}
+	\frac{n^l}{l!}
 .\]
 \end{Lem}
 \begin{proof}
 Положим
 \begin{align*}
-    & g(z) = e^{az} e^{-1/(2z^2)}, \\
-    & h(z) = e^{b/z}
+	& g(z) = e^{az} e^{-1/(2z^2)}, \\
+	& h(z) = e^{b/z}
 .\end{align*}
 Обе функции аналитичны в $\CC \setminus \{0\}$.
 Поэтому их ряды сходятся абсолютно и мы можем умножить ряды по Коши, чтобы получить ряд Лорана для $f$.
@@ -37,9 +37,9 @@
 .\]
 Формулу для $\alpha_k$ возьмем из леммы \ref{laurent-2}:
 \[
-	\alpha_k = \sum_{m=0}^{\infty} \frac{a^{2m+k} / \left( -2 \right)^m}{(2m+k)!\,m!} \\
+	\alpha_k = \sum_{m=0}^{\infty} \frac{a^{2m+k} / (-2)^{-m}}{(2m+k)!\,m!} \\
 .\]
-И выпишем формулу для $\beta_{-k}$:
+Выпишем формулу для $\beta_{-k}$:
 \[
 	\beta_{-k} = \frac{n^k}{k!}
 .\]
@@ -50,7 +50,7 @@
     \sum_{l=0}^{\infty} \alpha_{k+l} \beta_{-l} =
 %
     \sum_{l=0}^{\infty}
-    \sum_{m=0}^{\infty} \frac{a^{2m+k+l} / \left( -2 \right)^m}{(2m+k+l)!\,m!} \\
+    \sum_{m=0}^{\infty} \frac{a^{2m+k+l} / (-2)^{-m}}{(2m+k+l)!\,m!} \\
     \frac{n^l}{l!}
 .\]
 \end{proof}

@@ -20,6 +20,7 @@
     \right] \left( \tau \right)
 .\end{equation}
 Воспользуемся формулой Меллина обратного преобразования Лапласа. Данная функция имеет особенность только в нуле, откуда $\alpha$ можеть быть выбрано произвольным положительным числом.
+Отсюда
 \[
     L^{-1}_s \left[ \frac{1}{s^k}
     \exp \left(\frac{n}{s}\right)
@@ -77,16 +78,16 @@
 Нам нужен $k-1$--й член ряда Лорана функции $e^{s\tau} e^{-1/(2s^2)}$. Воспользуемся леммой \ref{laurent-2} о правильной части этой функции.  Получаем:
 \[
     \frac{1}{2\pi i}\int_{\alpha-i\infty}^{\alpha+i\infty} e^{s\tau} \frac{1}{s^k} e^{-1/(2s^2)} e^{n/s} ds =
-    \sum_{j=0}^{\infty} \frac{\tau^{2j+k-1} / (-2)^j}{(2j+k-1)!\,j!}
+    \sum_{j=0}^{\infty} \frac{\tau^{2j+k-1} (-2)^{-j}}{(2j+k-1)!\,j!}
 .\]
 Таким образом, мы вычислили выражение (\ref{eq:invlap_as_int}) для $n = 0$:
 \[
-    L^{-1}_s \left[ \frac{1}{s^k}
-    \exp \left(\frac{n}{s}\right)
-    \exp \left(-\frac{1}{2 s^2 }\right)
-    \right] \left( \tau \right)
-=
-    \sum_{j=0}^{\infty} \frac{\tau^{2j+k-1} / (-2)^j}{(2j+k-1)!\,j!}
+	L^{-1}_s \left[ \frac{1}{s^k}
+		\exp \left(\frac{n}{s}\right)
+		\exp \left(-\frac{1}{2 s^2 }\right)
+	\right] \left( \tau \right)
+	=
+	\sum_{j=0}^{\infty} \frac{\tau^{2j+k-1} (-2)^{-j}}{(2j+k-1)!\,j!}
 .\]
 Подставим этот ряд в выражение (\ref{eq:invlap}), заменяя $\tau$ на $t/2^{m+1}$:
 \begin{multline*}
@@ -99,7 +100,7 @@
     \right] \left( \frac{t}{2^{m+1}} \right) =
 \\%
     e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
-    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k-1} / (-2)^j}{(2j+k-1)!\,j!}
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k-1} (-2)^{-j}}{(2j+k-1)!\,j!}
 .\end{multline*}
 Наконец, подставим получившееся выражение в формулу~(\ref{eq:invlap_gen}):
 \begin{multline}\label{local:0:rmn}
@@ -112,15 +113,15 @@
 =\\=
     \left( 1-n^2 \right) 
     e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
-    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k-1} / (-2)^j}{(2j+k-1)!\,j!}
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k-1} (-2)^{-j}}{(2j+k-1)!\,j!}
 +\\+
     \left( \frac{n}{2^m} \right) 
     e^{-\frac{n^2}{2}} 2^{k(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
-    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k} / (-2)^j}{(2j+k)!\,j!}
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k} (-2)^{-j}}{(2j+k)!\,j!}
 -\\-
     \left( \frac{1}{4^{m+1}} \right) 
     e^{-\frac{n^2}{2}} 2^{(k+1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
-    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k+1} / (-2)^j}{(2j+k+1)!\,j!}
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k+1} (-2)^{-j}}{(2j+k+1)!\,j!}
 .\end{multline}
 Теперь получим выражение для $g_{m,n}(t)$, подставляя соотношение (\ref{local:0:rmn}) в выражение~(\ref{eq:gmn-laplace}):
 \begin{multline*}
@@ -129,15 +130,15 @@
 =\\=
     \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} \left( 1-n^2 \right) 
     e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
-    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k-1} / (-2)^j}{(2j+k-1)!\,j!}
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k-1} (-2)^{-j}}{(2j+k-1)!\,j!}
 +\\+
     \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} \left( \frac{n}{2^m} \right) 
     e^{-\frac{n^2}{2}} 2^{k(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
-    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k} / (-2)^j}{(2j+k)!\,j!}
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k} (-2)^{-j}}{(2j+k)!\,j!}
 -\\-
     \frac{1}{t^{k-1}} \frac{\Gamma(k)}{\sqrt{2^m}} \left( \frac{1}{4^{m+1}} \right) 
     e^{-\frac{n^2}{2}} 2^{(k+1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
-    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k+1} / (-2)^j}{(2j+k+1)!\,j!}
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j+k+1} (-2)^{-j}}{(2j+k+1)!\,j!}
 .\end{multline*}
 %
 Теперь упростим выражение. Вынесем из суммы, степень, не зависящую от переменной суммирования и сделаем замену $n=0$ (так как рассматриваем именно этот случай):
@@ -147,10 +148,10 @@
     \frac{\Gamma(k)}{\sqrt{2^m}}
     \frac{2}{\sqrt{3} \pi^{1/4}} \left(
 %
-    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j} / (-2)^j}{(2j+k-1)!\,j!}
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j} (-2)^{-j}}{(2j+k-1)!\,j!}
 -
     \left( \frac{t^2}{4^{m+1}} \right) 
-    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j} / (-2)^j}{(2j+k+1)!\,j!}
+    \sum_{j=0}^{\infty} \frac{\left(\frac{t}{2^{m+1}}\right)^{2j} (-2)^{-j}}{(2j+k+1)!\,j!}
 %
     \right)
 .\]
@@ -158,7 +159,7 @@
 Нам нужен $k-1$-й член ряда Лорана функции $e^{s\tau} e^{-1/(2s^2)} e^{n/s}$. Воспользуемся леммой \ref{laurent-3} о правильной части этой функции. Получаем:
 \[
     \frac{1}{2\pi i}\int_{\alpha-i\infty}^{\alpha+i\infty} e^{s\tau} \frac{1}{s^k} e^{-1/{2s^2}} e^{n/s} ds =
-    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\tau^{2j+k-1+i} / (-2)^j}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\tau^{2j+k-1+i} (-2)^{-j}}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
 .\]
 Таким образом, мы вычислили выражение (\ref{eq:invlap_as_int}) для $n \ne 0$:
 \[
@@ -167,7 +168,7 @@
     \exp \left(-\frac{1}{2 s^2 }\right)
     \right] \left( \tau \right)
 =
-    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\tau^{2j+k-1+i} / (-2)^j}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\tau^{2j+k-1+i} (-2)^{-j}}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
 .\]
 Подставим это выражение в выражение (\ref{eq:invlap}), заменяя $\tau$ на $t/2^{m+1}$:
 \begin{multline*}
@@ -180,7 +181,7 @@
     \right] \left( \frac{t}{2^{m+1}} \right)
 =\\=%
     e^{-\frac{n^2}{2}} 2^{(k-1)(m+1)} \frac{2}{\sqrt{3} \pi^{1/4}}
-    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k-1+i} / (-2)^j}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+k-1+i} (-2)^{-j}}{(2j+k-1+i)!\,j!} \frac{n^i}{i!}
 .\end{multline*}
 Наконец, подставим результат в формулу~(\ref{eq:invlap_gen}):
 \begin{multline}\label{local:not0:gmn}
@@ -226,13 +227,13 @@
 =
     \frac{\Gamma(k)}{\sqrt{2^m}} e^{-\frac{n^2}{2}} \frac{2}{\sqrt{3} \pi^{1/4}} \left(
     \left( 1-n^2 \right) 
-    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+i} / (-2)^j}{(2j+k-1+i)!\,j!} \frac{n^i}{i!} \right.
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+i} (-2)^{-j}}{(2j+k-1+i)!\,j!} \frac{n^i}{i!} \right.
 +\\+
     \left( \frac{nt}{2^m} \right) 
-    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+i} / (-2)^j}{(2j+k+i)!\,j!} \frac{n^i}{i!}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+i} (-2)^{-j}}{(2j+k+i)!\,j!} \frac{n^i}{i!}
 -\\- \left.
     \left( \frac{t^2}{4^{m+1}} \right) 
-    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+i} / (-2)^j}{(2j+k+1+i)!\,j!} \frac{n^i}{i!}
+    \sum_{i=0}^{\infty} \sum_{j=0}^{\infty} \frac{\left( \frac{t}{2^{m+1}} \right) ^{2j+i} (-2)^{-j}}{(2j+k+1+i)!\,j!} \frac{n^i}{i!}
     \right)
 .\end{multline*}
 \end{document}
