@@ -26,7 +26,7 @@
 \begin{figure}[!ht]
 	\centering
 	\input{theorems/jordan-lemma/jordan-lemma-path-figure.tex}
-	\caption{контур и область}
+	\caption{Контур и область.}
 \end{figure}
 
 По условию
@@ -47,27 +47,27 @@
 Подставим полученное представление в интеграл:
 \[
 	\varepsilon \int_{C_R} \left|e^{st}\right| |ds|
-	= \varepsilon \int_{\frac{\pi}{2}}^{\frac{3\pi}{2}} e^{\alpha t + R t \cos \varphi} \left|d\left(Re^{i\varphi}\right)\right|
+	= \varepsilon \int_{\pi/2}^{\pi/2} e^{\alpha t + R t \cos \varphi} \left|d\left(Re^{i\varphi}\right)\right|
 \]
 Упростим полученное выражение:
 \begin{multline*}
-	\varepsilon \int_{\frac{\pi}{2}}^{\frac{3\pi}{2}} e^{\alpha t + R t \cos \varphi} \left|d\left(Re^{i\varphi}\right)\right|
-	= \varepsilon \int_{\frac{\pi}{2}}^{\frac{3\pi}{2}} \left|e^{\alpha t + R t \cos \varphi} R i e^{i\varphi} \right| d\varphi
-	= R\varepsilon e^{\alpha t} \int_{\frac{\pi}{2}}^{\frac{3\pi}{2}} e^{R t \cos\varphi} d\varphi
+	\varepsilon \int_{\pi/2}^{\pi/2} e^{\alpha t + R t \cos \varphi} \left|d\left(Re^{i\varphi}\right)\right|
+	= \varepsilon \int_{\pi/2}^{\pi/2} \left|e^{\alpha t + R t \cos \varphi} R i e^{i\varphi} \right| d\varphi
+	= R\varepsilon e^{\alpha t} \int_{\pi/2}^{\pi/2} e^{R t \cos\varphi} d\varphi
 	\\= R\varepsilon e^{\alpha t} \int_{0}^{\pi} e^{R t \cos \left(\varphi + \frac{\pi}{2}\right)} d\varphi
 	= R\varepsilon e^{\alpha t} \int_{0}^{\pi} e^{-R t \sin\varphi} d\varphi
-	= 2R\varepsilon e^{\alpha t} \int_{0}^{\frac{\pi}{2}} e^{-R t \sin\varphi} d\varphi
+	= 2R\varepsilon e^{\alpha t} \int_{0}^{\pi/2} e^{-R t \sin\varphi} d\varphi
 .\end{multline*}
-На отрезке $[0, \frac{\pi}{2}]$ выполняется неравенство $\sin\varphi \ge \frac{2}{\pi} \varphi$.
+На отрезке $[0, \pi/2]$ выполняется неравенство $\sin\varphi \ge (2/\pi) \varphi$.
 А значит,
 \[
-	2R\varepsilon e^{\alpha t} \int_{0}^{\frac{\pi}{2}} e^{-R t \sin\varphi} d\varphi
-	\le 2R\varepsilon e^{\alpha t} \int_{0}^{\frac{\pi}{2}} e^{-R t \frac{2}{\pi}\varphi} d\varphi
+	2R\varepsilon e^{\alpha t} \int_{0}^{\pi/2} e^{-R t \sin\varphi} d\varphi
+	\le 2R\varepsilon e^{\alpha t} \int_{0}^{\pi/2} \exp\left(-R t \frac{2}{\pi}\varphi\right) d\varphi
 .\]
 Полученный интеграл вычисляется напрямую:
 \[
-	2R\varepsilon e^{\alpha t} \int_{0}^{\frac{\pi}{2}} e^{-R t \frac{2}{\pi}\varphi} d\varphi
-	= 2R\varepsilon e^{\alpha t} \left.\left( \frac{1}{-\frac{2Rt}{\pi}}e^{- \frac{2 R t \varphi}{\pi}} \right) \right|_0^{\frac{\pi}{2}} 
+	2R\varepsilon e^{\alpha t} \int_{0}^{\pi/2} e^{-R t \frac{2}{\pi}\varphi} d\varphi
+	= 2R\varepsilon e^{\alpha t} \left.\left( \frac{1}{-\frac{2Rt}{\pi}} \exp\left(- \frac{2 R t \varphi}{\pi}\right) \right) \right|_0^{\pi/2} 
         = \frac{\pi\varepsilon}{t} e^{\alpha t} \left(1 - e^{- R t} \right)
 .\]
 Получившаяся функции стремится к нулю при $R \to \infty$.
